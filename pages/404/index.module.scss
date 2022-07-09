@@ -1,0 +1,10 @@
+.container {
+  @apply max-w-lg h-screen flex justify-center items-center text-5xl font-bold;
+  .textLayer {
+    @apply bg-clip-text text-transparent break-words;
+    background-image: linear-gradient(
+      rgb(255, 118, 152) 29.17%,
+      rgb(40, 0, 255) 100%
+    );
+  }
+}
