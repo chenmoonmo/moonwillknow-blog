@@ -1,0 +1,15 @@
+.navContainer {
+  @apply flex items-center relative;
+  .menuContainer {
+    @apply absolute flex flex-col items-center right-0 top-10 bg-white;
+  }
+  .unshow {
+    @apply hidden md:flex flex-row items-center;
+  }
+  .menuItem {
+    @apply font-bold text-xl pr-3 cursor-pointer select-none hover:text-green-600;
+  }
+  .manageBtn {
+    @apply bg-green-600 text-white font-bold text-sm md:text-xl px-4 py-1 rounded-full hover:bg-green-700 cursor-pointer;
+  }
+}
