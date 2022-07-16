@@ -1,0 +1,6 @@
+.container {
+  @apply relative h-[400px] w-full;
+  .text {
+    @apply relative z-10 text-8xl font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white;
+  }
+}

@@ -1,17 +1,13 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
+import { Banner } from 'components'
 
-import styles from '@/styles/Home.module.scss'
-
-import { Button, Container } from '@mui/material'
-import { Header } from 'components'
+import styles from './index.module.scss'
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Header></Header>
-      <main></main>
-    </div>
+    <main>
+      <Banner />
+    </main>
   )
 }
 

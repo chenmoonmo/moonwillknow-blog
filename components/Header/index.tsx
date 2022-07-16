@@ -1,46 +1,78 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useMemo } from 'react'
+import { FC, ReactElement, useRef, useState } from 'react'
 import styles from './index.module.scss'
-const Navs = () => {
-  const navs = [
+import { motion, useAnimation } from 'framer-motion'
+import {
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
+
+const Navs: FC = (): ReactElement => {
+  const NavItems = [
     { name: 'Home', path: '/home' },
     { name: 'Labels', path: '/labels' },
     { name: 'About', path: '/about' },
   ]
-  const [menuState, setmenuState] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const test = () => setmenuState(!menuState)
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+  const handleMenuIconClick = () => {
+    setIsOpen(true)
+  }
 
   return (
     <div className={styles.navContainer}>
-      <div className={menuState ? styles.menuContainer : styles.unshow}>
-        {navs.map((item) => (
-          <div key={item.name} className={styles.menuItem}>
+      <ul className={styles.menuContainer}>
+        {NavItems.map((item) => (
+          <li key={item.name} className={styles.menuItem}>
             <Link href={item.path}>{item.name}</Link>
-          </div>
+          </li>
         ))}
-      </div>
-      <div className={styles.manageBtn}>
-        <Link href={`/login`}>Manage</Link>
-      </div>
-      <ul className="w-8 ml-2 cursor-pointer md:hidden" onClick={test}>
-        <li className="bg-black h-1 "></li>
-        <li className="bg-black h-1 my-1"></li>
-        <li className="bg-black h-1 "></li>
       </ul>
+      <Button className={styles.manageBtn}>
+        <Link href="/login">Manage</Link>
+      </Button>
+      <HamburgerIcon
+        className={styles.menuIcon}
+        onClick={handleMenuIconClick}
+      />
+
+      <Drawer isOpen={isOpen} placement="right" onClose={handleClose} size="xs">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <ul className={styles.drawerMenu}>
+              {NavItems.map((item) => (
+                <li key={item.name} className={styles.menuItem}>
+                  <Link href={item.path}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </div>
   )
 }
 const Header = () => {
   return (
-    <div className="sticky bg-white shadow-sm top-0 h-16 px-5 md:px-10 flex flex-row items-center justify-between z-50">
-      <div className="cursor-pointer flex flex-row items-center">
-        {/* <Image src="/pokemon.png" height="30px" width="30"></Image> */}
-        <span className="font-bold text-xl md:text-3xl">Thyme Blog</span>
+    <header className={styles.headerContainer}>
+      <div className={styles.siteName}>
+        <Link href="/home">
+          <span>🌕 Moon Will Know</span>
+        </Link>
       </div>
-      <Navs></Navs>
-    </div>
+      <Navs />
+    </header>
   )
 }
 
