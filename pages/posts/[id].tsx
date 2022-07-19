@@ -1,8 +1,22 @@
 import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styles from "./index.module.scss";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+
+import { request } from "utils";
+
+import Prism from "prismjs";
+
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-shell-session";
+
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-jsx";
+
 interface IProps {
   data: any;
 }
@@ -10,26 +24,40 @@ interface IProps {
 const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(data);
+  const [isMounted, setMount] = useState(false);
+
+  useEffect(() => {
+    setMount(true);
+  }, []);
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [isMounted]);
+
   return (
     <main className={styles.postContainer}>
-      <div>{id}</div>
-      <div
-        className="markdown-body"
-        dangerouslySetInnerHTML={{ __html: data?.content?.html }}
-      ></div>
+      <div className={styles.cover}>
+        <h1>{data?.content?.title}</h1>
+      </div>
+      <ReactMarkdown className="markdown-body" rehypePlugins={[rehypeRaw]}>
+        {isMounted ? data?.content?.html : null}
+      </ReactMarkdown>
     </main>
   );
 };
 
 export async function getServerSideProps() {
-  const {
-    data: { data: list },
-  } = await axios.get("http://localhost:3000/notion/post-list");
+  let list;
+
+  try {
+    ({ data: list } = await request.get("/notion/post-list"));
+  } catch (e) {
+    console.error(e);
+  }
 
   return {
     props: {
-      data: list?.[0],
+      data: list?.[1],
     },
   };
 }
