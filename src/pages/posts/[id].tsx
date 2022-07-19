@@ -47,17 +47,17 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
 };
 
 export async function getServerSideProps() {
-  let list;
+  // let list;
 
-  try {
-    ({ data: list } = await request.get("/notion/post-list"));
-  } catch (e) {
-    console.error(e);
-  }
+  // try {
+  //   ({ data: list } = await request.get("/notion/post-list"));
+  // } catch (e) {
+  //   console.error(e);
+  // }
 
   return {
     props: {
-      data: list?.[1],
+      // data: list?.[1],
     },
   };
 }

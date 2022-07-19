@@ -1,14 +1,12 @@
 import Link from 'next/link'
-import { FC, ReactElement, useRef, useState } from 'react'
+import { FC, ReactElement, useState } from 'react'
 import styles from './index.module.scss'
-import { motion, useAnimation } from 'framer-motion'
 import {
   Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'

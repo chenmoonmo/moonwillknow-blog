@@ -1,16 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-interface PostState {}
+import { getPostsList } from "api";
 
-const initialState: PostState = {};
+interface PostState {
+  list: any[];
+}
+
+const initialState: PostState = {
+  list: [],
+};
+
+export const getpostsListData = createAsyncThunk("posts/getPosts", getPostsList);
 
 export const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {
-
-  }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getpostsListData.fulfilled, (state, action) => {
+      state.list = action.payload.data;
+    });
+  },
 });
 
 
-export default postSlice.reducer
+export default postSlice.reducer;

@@ -1,0 +1,12 @@
+.container {
+  @apply block w-full h-[180px] p-5 rounded-md shadow-md cursor-pointer hover:shadow-lg overflow-hidden;
+  h1 {
+    @apply text-lg font-semibold;
+  }
+  .postInfo {
+    @apply w-full mt-2 text-sm text-gray-800 break-all overflow-hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+}

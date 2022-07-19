@@ -9,7 +9,6 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 request.interceptors.request.use(
   (config) => {
-    console.log(config)
     return config;
   },
   (error) => {
@@ -19,7 +18,6 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
-    console.log(response);
     return response.data;
   },
   (error) => {

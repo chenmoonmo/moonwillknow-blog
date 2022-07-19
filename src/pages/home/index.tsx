@@ -1,31 +1,40 @@
 import type { NextPage } from "next";
-import { Banner } from "components";
+import { Banner, PostCard } from "components";
 
 import styles from "./index.module.scss";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "utils";
+import { getpostsListData } from "slices/posts";
+import { useRouter } from "next/router";
+import { useMount } from "ahooks";
 
 interface IProps {
-  list: any;
+  // list: any;
 }
 
-const Home: NextPage<IProps> = ({ list }) => {
-  console.log({ list });
+const Home: NextPage<IProps> = () => {
+  console.log(1)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { list } = useAppSelector((state) => state.posts);
+
+  const handleToPosts = (id: string) => {
+    router.push(`/posts/${id}`);
+  };
+
+  useMount(() => {
+    dispatch(getpostsListData());
+  });
+
   return (
-    <main>
+    <main className={styles.container}>
       <Banner />
+      <div className={styles.postsContainer}>
+        {list.map((data: any) => (
+          <PostCard key={data.id} data={data} onClick={handleToPosts} />
+        ))}
+      </div>
     </main>
   );
 };
-
-export async function getServerSideProps() {
-  const {
-    data: { data: list },
-  } = await axios.get("http://localhost:3000/notion/post-list");
-  return {
-    props: {
-      list,
-    },
-  };
-}
 
 export default Home;
