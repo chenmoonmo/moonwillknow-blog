@@ -12,10 +12,10 @@ interface IProps {
 }
 
 const Home: NextPage<IProps> = () => {
-  console.log(1)
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.posts);
+  console.log(list)
 
   const handleToPosts = (id: string) => {
     router.push(`/posts/${id}`);
@@ -26,10 +26,10 @@ const Home: NextPage<IProps> = () => {
   });
 
   return (
-    <main className={styles.container}>
+    <main className={styles.homeContainer}>
       <Banner />
       <div className={styles.postsContainer}>
-        {list.map((data: any) => (
+        {list?.map((data: any) => (
           <PostCard key={data.id} data={data} onClick={handleToPosts} />
         ))}
       </div>
