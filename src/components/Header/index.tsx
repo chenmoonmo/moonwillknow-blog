@@ -14,7 +14,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 const Navs: FC = (): ReactElement => {
   const NavItems = [
     { name: 'Home', path: '/home' },
-    { name: 'Labels', path: '/labels' },
+    { name: 'Posts', path: '/posts' },
     { name: 'About', path: '/about' },
   ]
   const [isOpen, setIsOpen] = useState(false)

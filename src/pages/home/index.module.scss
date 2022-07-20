@@ -1,6 +1,13 @@
 .homeContainer {
+  .sectionTitle {
+    @apply flex items-center max-w-7xl mx-auto mt-10 px-10 text-3xl font-bold;
+    .more {
+      @apply ml-4;
+    }
+  }
   .postsContainer {
-    @apply max-w-7xl mx-auto py-10 px-10 grid grid-flow-row grid-cols-1 gap-5;
+    @apply max-w-7xl mx-auto mt-10 px-10 grid grid-flow-row grid-cols-1 gap-5;
+
     @screen md {
       @apply grid-cols-3;
     }

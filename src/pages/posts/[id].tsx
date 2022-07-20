@@ -1,35 +1,32 @@
-import axios from "axios";
-import { InferGetServerSidePropsType, NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { ReactElement, FC, useEffect, useState } from "react";
-import styles from "./index.module.scss";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import React, { ReactElement, FC, useEffect, useState } from 'react'
+import styles from './detail.module.scss'
 
-import { request } from "utils";
-import "react-notion-x/src/styles.css";
+import { request } from 'utils'
+import 'react-notion-x/src/styles.css'
 
-import { defaultMapImageUrl, NotionRenderer } from "react-notion-x";
-import Link from "next/link";
-import Image from "next/image";
-import { Code } from "react-notion-x/build/third-party/code";
-import { Equation } from "react-notion-x/build/third-party/equation";
-import { Modal } from "react-notion-x/build/third-party/modal";
-import { Pdf } from "react-notion-x/build/third-party/pdf";
+import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Code } from 'react-notion-x/build/third-party/code'
+import { Equation } from 'react-notion-x/build/third-party/equation'
+import { Modal } from 'react-notion-x/build/third-party/modal'
+import { Pdf } from 'react-notion-x/build/third-party/pdf'
 
 interface IProps {
-  data: any;
+  data: any
 }
 
 const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
-  const router = useRouter();
-  const { id } = router.query;
-  const [isMounted, setMount] = useState(false);
+  const router = useRouter()
+  const { id } = router.query
+  const [isMounted, setMount] = useState(false)
 
   useEffect(() => {
-    setMount(true);
-    console.log(data);
-  }, []);
+    setMount(true)
+    console.log(data)
+  }, [])
 
   // TODO: 抽出cover组件
   let cover = (
@@ -49,7 +46,7 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
         />
       ) : null}
     </div>
-  );
+  )
 
   return (
     <main className={styles.postContainer}>
@@ -70,18 +67,18 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
         />
       ) : null}
     </main>
-  );
-};
+  )
+}
 
 export async function getServerSideProps(context) {
-  const { id } = context.params;
-  const { data } = await request.get(`/notion/posts/${id}`);
+  const { id } = context.params
+  const { data } = await request.get(`/notion/posts/${id}`)
 
   return {
     props: {
       data,
     },
-  };
+  }
 }
 
-export default PostDetail;
+export default PostDetail
