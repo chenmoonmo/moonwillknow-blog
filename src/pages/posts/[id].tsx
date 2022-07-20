@@ -1,21 +1,21 @@
 import axios from "axios";
-import { NextPage } from "next";
+import { InferGetServerSidePropsType, NextPage } from "next";
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, FC, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
 import { request } from "utils";
+import "react-notion-x/src/styles.css";
 
-import Prism from "prismjs";
-
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-json";
-import "prismjs/components/prism-shell-session";
-
-import "prismjs/components/prism-css";
-import "prismjs/components/prism-jsx";
+import { defaultMapImageUrl, NotionRenderer } from "react-notion-x";
+import Link from "next/link";
+import Image from "next/image";
+import { Code } from "react-notion-x/build/third-party/code";
+import { Equation } from "react-notion-x/build/third-party/equation";
+import { Modal } from "react-notion-x/build/third-party/modal";
+import { Pdf } from "react-notion-x/build/third-party/pdf";
 
 interface IProps {
   data: any;
@@ -28,36 +28,58 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
 
   useEffect(() => {
     setMount(true);
+    console.log(data);
   }, []);
 
-  useEffect(() => {
-    Prism.highlightAll();
-  }, [isMounted]);
+  // TODO: 抽出cover组件
+  let cover = (
+    <div className={styles.cover}>
+      {data?.signed_urls?.[id as string] ? (
+        <Image
+          src={
+            defaultMapImageUrl(
+              data?.signed_urls?.[id as string],
+              data?.block
+            ) as string
+          }
+          alt=""
+          layout="fill"
+          objectFit="cover"
+          objectPosition="bottom"
+        />
+      ) : null}
+    </div>
+  );
 
   return (
     <main className={styles.postContainer}>
-      <div className={styles.cover}>
-        <h1>{data?.content?.title}</h1>
-      </div>
-      <ReactMarkdown className="markdown-body" rehypePlugins={[rehypeRaw]}>
-        {isMounted ? data?.content?.html : null}
-      </ReactMarkdown>
+      {isMounted ? (
+        <NotionRenderer
+          recordMap={data}
+          fullPage={true}
+          pageCover={cover}
+          disableHeader
+          components={{
+            nextImage: Image,
+            nextLink: Link,
+            Code,
+            Equation,
+            Modal,
+            Pdf,
+          }}
+        />
+      ) : null}
     </main>
   );
 };
 
-export async function getServerSideProps() {
-  // let list;
-
-  // try {
-  //   ({ data: list } = await request.get("/notion/post-list"));
-  // } catch (e) {
-  //   console.error(e);
-  // }
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const { data } = await request.get(`/notion/posts/${id}`);
 
   return {
     props: {
-      // data: list?.[1],
+      data,
     },
   };
 }

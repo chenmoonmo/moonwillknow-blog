@@ -1,7 +1,7 @@
 .postContainer {
   @apply p-4;
   .cover {
-    @apply relative h-40 w-full mb-10 rounded-md;
+    @apply relative h-40 w-full  rounded-md overflow-hidden;
     h1 {
       @apply text-6xl font-bold text-white absolute -bottom-5 left-5;
       text-shadow: 0 theme("spacing.1") theme("spacing.2") #c4b59d,
@@ -22,7 +22,6 @@
       #dd00f3
     );
     background-size: 1800% 1800%;
-
     -webkit-animation: rainbow 80s ease infinite;
     -z-animation: rainbow 80s ease infinite;
     -o-animation: rainbow 80s ease infinite;

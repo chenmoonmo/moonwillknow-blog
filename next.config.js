@@ -7,6 +7,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
+  images: {
+    domains: ["www.notion.so", "s3.us-west-2.amazonaws.com"],
+  },
   async redirects() {
     return [
       {

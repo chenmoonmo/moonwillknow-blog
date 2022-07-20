@@ -9,6 +9,6 @@ type GetPostsList = (parmas?: {
 }>;
 
 export const getPostsList: GetPostsList = (parmas) =>
-  request.get("/notion/post-list", {
+  request.get("/notion/posts", {
     data: parmas,
   });
