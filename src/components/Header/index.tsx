@@ -10,8 +10,11 @@ import {
   DrawerOverlay,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
+import cn from 'classnames';
 
 const Navs: FC = (): ReactElement => {
+  const router = useRouter()
   const NavItems = [
     { name: 'Home', path: '/home' },
     { name: 'Posts', path: '/posts' },
@@ -30,7 +33,7 @@ const Navs: FC = (): ReactElement => {
     <div className={styles.navContainer}>
       <ul className={styles.menuContainer}>
         {NavItems.map((item) => (
-          <li key={item.name} className={styles.menuItem}>
+          <li key={item.name} className={cn(styles.menuItem,{[styles.isActive]: item.path === router.asPath})}>
             <Link href={item.path}>{item.name}</Link>
           </li>
         ))}

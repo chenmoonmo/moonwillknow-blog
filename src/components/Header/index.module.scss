@@ -12,6 +12,9 @@
       @apply hidden absolute flex-col items-center right-0 top-10 bg-white;
       .menuItem {
         @apply font-bold text-xl pr-3 cursor-pointer select-none hover:text-green-600;
+        .isActive {
+          @apply text-green-600;
+        }
       }
     }
     .manageBtn {

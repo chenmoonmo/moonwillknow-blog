@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { ReactElement, FC, useEffect, useState } from 'react'
-import styles from './detail.module.scss'
+import styles from './index.module.scss'
 
 import { request } from 'utils'
 import 'react-notion-x/src/styles.css'
