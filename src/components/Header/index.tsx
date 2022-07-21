@@ -53,7 +53,7 @@ const Navs: FC = (): ReactElement => {
           <DrawerBody>
             <ul className={styles.drawerMenu}>
               {NavItems.map((item) => (
-                <li key={item.name} className={styles.menuItem}>
+                <li key={item.name} className={styles.menuItem} onClick={handleClose}>
                   <Link href={item.path}>{item.name}</Link>
                 </li>
               ))}
