@@ -1,5 +1,5 @@
 .headerContainer {
-  @apply sticky bg-white bg-opacity-90  dark:bg-[#1a202c] shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50;
+  @apply sticky   dark:bg-[#1a202c] dark:bg-opacity-80 bg-white bg-opacity-90 backdrop-blur  shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50;
 
   .siteName {
     @apply cursor-pointer flex flex-row items-center font-bold text-xl;
