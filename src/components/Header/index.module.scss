@@ -1,15 +1,16 @@
 .headerContainer {
-  @apply sticky bg-white shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50;
+  @apply sticky bg-white dark:bg-[#1a202c] shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50;
+
   .siteName {
-    @apply cursor-pointer flex flex-row items-center;
+    @apply cursor-pointer flex flex-row items-center font-bold text-xl;
     span {
-      @apply font-bold text-xl;
+      @apply mr-2 select-none;
     }
   }
   .navContainer {
     @apply flex items-center relative;
     .menuContainer {
-      @apply hidden absolute flex-col items-center right-0 top-10 bg-white;
+      @apply hidden absolute flex-col items-center right-0 top-10 bg-transparent;
       .menuItem {
         @apply font-bold text-xl pr-3 cursor-pointer select-none hover:text-green-600;
         .isActive {
@@ -27,7 +28,7 @@
 
   @screen md {
     @apply px-10;
-    .siteName span {
+    .siteName {
       @apply text-3xl;
     }
 

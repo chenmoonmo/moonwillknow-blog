@@ -1,46 +1,52 @@
-import Link from 'next/link'
-import { FC, ReactElement, useState } from 'react'
-import styles from './index.module.scss'
+import Link from "next/link";
+import { FC, ReactElement, useState } from "react";
+import styles from "./index.module.scss";
 import {
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
-} from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
-import { useRouter } from 'next/router'
-import cn from 'classnames';
+  useColorMode,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
+import cn from "classnames";
+import { useDebounce } from "ahooks";
 
 const Navs: FC = (): ReactElement => {
-  const router = useRouter()
+  const router = useRouter();
   const NavItems = [
-    { name: 'Home', path: '/home' },
-    { name: 'Posts', path: '/posts' },
-    { name: 'About', path: '/about' },
-  ]
-  const [isOpen, setIsOpen] = useState(false)
+    { name: "Home", path: "/home" },
+    { name: "Posts", path: "/posts" },
+    { name: "About", path: "/about" },
+  ];
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
   const handleMenuIconClick = () => {
-    setIsOpen(true)
-  }
+    setIsOpen(true);
+  };
 
   return (
     <div className={styles.navContainer}>
       <ul className={styles.menuContainer}>
         {NavItems.map((item) => (
-          <li key={item.name} className={cn(styles.menuItem,{[styles.isActive]: item.path === router.asPath})}>
+          <li
+            key={item.name}
+            className={cn(styles.menuItem, {
+              [styles.isActive]: item.path === router.asPath,
+            })}
+          >
             <Link href={item.path}>{item.name}</Link>
           </li>
         ))}
       </ul>
-      <Button className={styles.manageBtn}>
-        <Link href="/login">Manage</Link>
-      </Button>
+      {/* <Button className={styles.manageBtn} onClick={toggleColorMode}>
+        Manage
+      </Button> */}
       <HamburgerIcon
         className={styles.menuIcon}
         onClick={handleMenuIconClick}
@@ -53,7 +59,11 @@ const Navs: FC = (): ReactElement => {
           <DrawerBody>
             <ul className={styles.drawerMenu}>
               {NavItems.map((item) => (
-                <li key={item.name} className={styles.menuItem} onClick={handleClose}>
+                <li
+                  key={item.name}
+                  className={styles.menuItem}
+                  onClick={handleClose}
+                >
                   <Link href={item.path}>{item.name}</Link>
                 </li>
               ))}
@@ -62,19 +72,27 @@ const Navs: FC = (): ReactElement => {
         </DrawerContent>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 const Header = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const handleToggleMode = () => {
+    toggleColorMode();
+    localStorage.theme = localStorage.theme === "dark" ? "light" : "dark";
+  };
+
   return (
     <header className={styles.headerContainer}>
       <div className={styles.siteName}>
-        <Link href="/home">
-          <span>🌕 Moon Will Know</span>
-        </Link>
+          <span onClick={handleToggleMode}>
+            {colorMode === "dark" ? "🌕" : "🌞"}
+          </span>
+          <Link href="/home">Moon Will Know</Link>
       </div>
       <Navs />
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

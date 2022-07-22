@@ -26,3 +26,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.notion-frame {
+  @apply dark:bg-[#1a202c] dark:text-gray-50;
+}

@@ -1,31 +1,46 @@
-import type { NextPage } from 'next'
-import { Banner, PostCard } from 'components'
+import type { NextPage } from "next";
+import { Banner, PostCard } from "components";
 
-import styles from './index.module.scss'
-import { useAppDispatch, useAppSelector } from 'utils'
-import { getpostsListData } from 'slices/posts'
-import { useRouter } from 'next/router'
-import { useMount } from 'ahooks'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-import Link from 'next/link'
-import { IconButton, Skeleton } from '@chakra-ui/react'
+import styles from "./index.module.scss";
+import { useAppDispatch, useAppSelector } from "utils";
+import { getpostsListData } from "slices/posts";
+import { useRouter } from "next/router";
+import { useMount } from "ahooks";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import Link from "next/link";
+import { IconButton, Skeleton, useColorMode } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 interface IProps {
   // list: any;
 }
 
 const Home: NextPage<IProps> = () => {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const { isLoading, list } = useAppSelector((state) => state.posts)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { isLoading, list } = useAppSelector((state) => state.posts);
+
+  const { colorMode, setColorMode } = useColorMode();
 
   const handleToPosts = (id: string) => {
-    router.push(`/posts/${id}`)
-  }
+    router.push(`/posts/${id}`);
+  };
 
   useMount(() => {
-    dispatch(getpostsListData())
-  })
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      setColorMode("dark");
+      localStorage.theme = "dark";
+    } else {
+      setColorMode("light");
+      localStorage.theme = "light";
+    }
+
+    dispatch(getpostsListData());
+  });
 
   return (
     <main className={styles.homeContainer}>
@@ -59,7 +74,7 @@ const Home: NextPage<IProps> = () => {
         )}
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

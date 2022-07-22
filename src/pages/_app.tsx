@@ -1,11 +1,12 @@
-import '../styles/globals.css'
-import 'normalize.css/normalize.css'
-import type { AppProps } from 'next/app'
-import { Footer, Header } from '../components'
-import { ChakraProvider } from '@chakra-ui/react'
-import { Provider } from 'react-redux'
-import store from 'store'
-import Head from 'next/head'
+import "../styles/globals.css";
+import "normalize.css/normalize.css";
+import type { AppProps } from "next/app";
+import { Footer, Header } from "../components";
+import { ChakraProvider, useColorMode } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import store from "store";
+import Head from "next/head";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Footer />
       </ChakraProvider>
     </Provider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

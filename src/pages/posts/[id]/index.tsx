@@ -13,12 +13,14 @@ import { Code } from "react-notion-x/build/third-party/code";
 import { Equation } from "react-notion-x/build/third-party/equation";
 import { Modal } from "react-notion-x/build/third-party/modal";
 import { Pdf } from "react-notion-x/build/third-party/pdf";
+import { useColorMode } from "@chakra-ui/react";
 
 interface IProps {
   data: any;
 }
 
 const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
+  const { colorMode } = useColorMode();
   const router = useRouter();
   const { id } = router.query;
   const [isMounted, setMount] = useState(false);
@@ -52,6 +54,7 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
     <main className={styles.postContainer}>
       {isMounted ? (
         <NotionRenderer
+          darkMode={colorMode === "dark"}
           recordMap={data}
           fullPage={true}
           pageCover={cover}
