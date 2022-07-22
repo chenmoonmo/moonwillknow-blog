@@ -26,7 +26,9 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
   const [isMounted, setMount] = useState(false)
 
   useEffect(() => {
-    setMount(true)
+    if (data) {
+      setMount(true)
+    }
     console.log(data)
   }, [])
 
@@ -75,7 +77,10 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
 
 export async function getServerSideProps(context: any) {
   const { id } = context.params
-  const { data } = await request.get(`/notion/posts/${id}`)
+  let data = null
+  try {
+    ;({ data } = await request.get(`/notion/posts/${id}`))
+  } catch {}
 
   return {
     props: {
