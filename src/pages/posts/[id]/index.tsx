@@ -84,7 +84,9 @@ export async function getServerSideProps(context: any) {
   let data = null;
   try {
     ({ data } = await request.get(`/notion/posts/${id}`));
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
 
   return {
     props: {
