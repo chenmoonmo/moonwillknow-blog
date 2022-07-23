@@ -1,36 +1,36 @@
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import React, { ReactElement, FC, useEffect, useState } from 'react'
-import styles from './index.module.scss'
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import React, { ReactElement, FC, useEffect, useState } from "react";
+import styles from "./index.module.scss";
 
-import { request } from 'utils'
-import 'react-notion-x/src/styles.css'
+import { request } from "utils";
+import "react-notion-x/src/styles.css";
 
-import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Code } from 'react-notion-x/build/third-party/code'
-import { Equation } from 'react-notion-x/build/third-party/equation'
-import { Modal } from 'react-notion-x/build/third-party/modal'
-import { Pdf } from 'react-notion-x/build/third-party/pdf'
-import { useColorMode } from '@chakra-ui/react'
+import { defaultMapImageUrl, NotionRenderer } from "react-notion-x";
+import Link from "next/link";
+import Image from "next/image";
+import { Code } from "react-notion-x/build/third-party/code";
+import { Equation } from "react-notion-x/build/third-party/equation";
+import { Modal } from "react-notion-x/build/third-party/modal";
+import { Pdf } from "react-notion-x/build/third-party/pdf";
+import { useColorMode } from "@chakra-ui/react";
+import Error from "next/error";
+import NotFound from "pages/404";
 
 interface IProps {
-  data: any
+  data: any;
 }
 
 const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
-  const { colorMode } = useColorMode()
-  const router = useRouter()
-  const { id } = router.query
-  const [isMounted, setMount] = useState(false)
+  const { colorMode } = useColorMode();
+  const router = useRouter();
+  const { id } = router.query;
+  const [isMounted, setMount] = useState(false);
 
   useEffect(() => {
-    if (data) {
-      setMount(true)
-    }
-    console.log(data)
-  }, [])
+    setMount(true);
+    console.log(data);
+  }, []);
 
   // TODO: 抽出cover组件
   let cover = (
@@ -50,13 +50,17 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
         />
       ) : null}
     </div>
-  )
+  );
+
+  if (isMounted && data === null) {
+    return <NotFound />;
+  }
 
   return (
     <main className={styles.postContainer}>
       {isMounted ? (
         <NotionRenderer
-          darkMode={colorMode === 'dark'}
+          darkMode={colorMode === "dark"}
           recordMap={data}
           fullPage={true}
           pageCover={cover}
@@ -72,21 +76,21 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
         />
       ) : null}
     </main>
-  )
-}
+  );
+};
 
 export async function getServerSideProps(context: any) {
-  const { id } = context.params
-  let data = null
+  const { id } = context.params;
+  let data = null;
   try {
-    ;({ data } = await request.get(`/notion/posts/${id}`))
+    ({ data } = await request.get(`/notion/posts/${id}`));
   } catch {}
 
   return {
     props: {
       data,
     },
-  }
+  };
 }
 
-export default PostDetail
+export default PostDetail;
