@@ -42,8 +42,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             name="twitter:description"
             content="Best MoonWillKnow in the world"
           />
-
           <meta name="twitter:creator" content="@DavidWShadow" />
+          
           <meta property="og:type" content="website" />
           <meta property="og:title" content="MoonWillKnow" />
           <meta property="og:description" content="Best MoonWillKnow in the world" />
