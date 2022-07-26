@@ -14,14 +14,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <Head>
           <title>Moon Will Know</title>
-          <meta name="application-name" content="PWA App" />
+          <meta name="application-name" content="MoonWillKnow" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta name="apple-mobile-web-app-title" content="PWA App" />
-          <meta name="description" content="Best PWA App in the world" />
+          <meta name="apple-mobile-web-app-title" content="MoonWillKnow" />
+          <meta name="description" content="Moon will know" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
 
@@ -35,20 +35,20 @@ function MyApp({ Component, pageProps }: AppProps) {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
           />
 
-          <meta name="twitter:card" content="summary" />
+          {/* <meta name="twitter:card" content="summary" />
           <meta name="twitter:url" content="https://www.moonwillknow.dev" />
-          <meta name="twitter:title" content="PWA App" />
+          <meta name="twitter:title" content="MoonWillKnow" />
           <meta
             name="twitter:description"
-            content="Best PWA App in the world"
+            content="Best MoonWillKnow in the world"
           />
 
           <meta name="twitter:creator" content="@DavidWShadow" />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="PWA App" />
-          <meta property="og:description" content="Best PWA App in the world" />
-          <meta property="og:site_name" content="PWA App" />
-          <meta property="og:url" content="https://www.moonwillknow.dev" />
+          <meta property="og:title" content="MoonWillKnow" />
+          <meta property="og:description" content="Best MoonWillKnow in the world" />
+          <meta property="og:site_name" content="MoonWillKnow" />
+          <meta property="og:url" content="https://www.moonwillknow.dev" /> */}
 
           <meta
             name="viewport"
