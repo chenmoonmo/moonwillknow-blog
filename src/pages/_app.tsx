@@ -9,6 +9,12 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(()=>{
+    console.log(1)
+    window.addEventListener('beforeinstallprompt',(envent)=>{
+      console.log('beforeinstallprompt',envent)
+    })
+  },[])
   return (
     <Provider store={store}>
       <ChakraProvider>
@@ -34,22 +40,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
           />
-
-          {/* <meta name="twitter:card" content="summary" />
-          <meta name="twitter:url" content="https://www.moonwillknow.dev" />
-          <meta name="twitter:title" content="MoonWillKnow" />
-          <meta
-            name="twitter:description"
-            content="Best MoonWillKnow in the world"
-          />
-          <meta name="twitter:creator" content="@DavidWShadow" />
-          
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="MoonWillKnow" />
-          <meta property="og:description" content="Best MoonWillKnow in the world" />
-          <meta property="og:site_name" content="MoonWillKnow" />
-          <meta property="og:url" content="https://www.moonwillknow.dev" /> */}
-
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"

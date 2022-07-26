@@ -6,6 +6,7 @@ const withPWA = require("next-pwa");
 const nextConfig = {
   pwa: {
     dest: "public",
+    customWorkerDir: "./worker",
   },
   reactStrictMode: true,
   swcMinify: true,
