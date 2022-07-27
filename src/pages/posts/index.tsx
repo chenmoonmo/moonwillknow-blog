@@ -75,12 +75,12 @@ const Posts: NextPage = (): ReactElement => {
       <div className={styles.postsContainer}>
         {isLoading ? (
           <>
-            <Skeleton height={180}></Skeleton>
-            <Skeleton height={180}></Skeleton>
-            <Skeleton height={180}></Skeleton>
-            <Skeleton height={180}></Skeleton>
-            <Skeleton height={180}></Skeleton>
-            <Skeleton height={180}></Skeleton>
+            <Skeleton height={180} />
+            <Skeleton height={180} />
+            <Skeleton height={180} />
+            <Skeleton height={180} />
+            <Skeleton height={180} />
+            <Skeleton height={180} />
           </>
         ) : (
           <AnimatePresence>
