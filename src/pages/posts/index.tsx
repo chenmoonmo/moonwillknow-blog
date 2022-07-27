@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'utils'
 import styles from './index.module.scss'
 
 import { intersection, remove, cloneDeep } from 'lodash'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const Posts: NextPage = (): ReactElement => {
   const router = useRouter()
@@ -18,22 +19,26 @@ const Posts: NextPage = (): ReactElement => {
 
   const [currentTags, setTags] = useState<string[]>(tags)
 
+  const [currentList, setList] = useState(list)
+
   const handleToPosts = (id: string) => {
     router.push(`/posts/${id}`)
   }
 
   const handleFilte = (item: string) => {
-    if (currentTags.includes(item)) {
-      setTags((preTags) => {
-        let cloneTags = cloneDeep(preTags)
-        remove(cloneTags, (x) => x === item)
-        return cloneTags
-      })
+    let cloneTags = cloneDeep(currentTags)
+
+    if (cloneTags.includes(item)) {
+      remove(cloneTags, (x) => x === item)
     } else {
-      setTags((preTags) => {
-        return [...preTags, item]
-      })
+      cloneTags = [...cloneTags, item]
     }
+    setTags(cloneTags)
+    setList(() => {
+      return list.filter((item) => {
+        return intersection(item.tags, cloneTags).length > 0
+      })
+    })
   }
 
   useMount(() => {
@@ -45,6 +50,12 @@ const Posts: NextPage = (): ReactElement => {
       setTags(tags)
     }
   }, [tags])
+
+  useUpdateEffect(() => {
+    if (currentList.length === 0) {
+      setList(list)
+    }
+  }, [list])
 
   return (
     <main className={styles.container}>
@@ -72,16 +83,32 @@ const Posts: NextPage = (): ReactElement => {
             <Skeleton height={180}></Skeleton>
           </>
         ) : (
-          list?.map((data: any) => (
-            <ScaleFade
-              key={data.id}
-              initialScale={0.9}
-              in={intersection(data.tags, currentTags).length > 0}
-              unmountOnExit
-            >
-              <PostCard data={data} onClick={handleToPosts} />
-            </ScaleFade>
-          ))
+          <AnimatePresence initial={false}>
+            {currentList?.map((data: any) => (
+              <motion.div
+                key={data.id}
+                layout
+                exit={{
+                  scale: 0.8,
+                  opacity: 0,
+                }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                }}
+                initial={{
+                  scale: 1.1,
+                  opacity: 0,
+                }}
+                transition={{
+                  duration: 0.2,
+                  type: 'tween',
+                }}
+              >
+                <PostCard data={data} onClick={handleToPosts} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         )}
       </div>
     </main>
