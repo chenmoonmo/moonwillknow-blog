@@ -30,11 +30,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="description" content="Moon will know" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
-
           <meta name="msapplication-TileColor" content="#2B5797" />
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#000000" />
 
+          <link rel='apple-touch-icon' href='/icons/icon-128x128.png' />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
