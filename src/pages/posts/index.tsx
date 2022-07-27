@@ -83,7 +83,7 @@ const Posts: NextPage = (): ReactElement => {
             <Skeleton height={180}></Skeleton>
           </>
         ) : (
-          <AnimatePresence initial={false}>
+          <AnimatePresence>
             {currentList?.map((data: any) => (
               <motion.div
                 key={data.id}
