@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 你好，世界
 
-## Getting Started
+你好，我是Moon，这里是我的[博客](https://moonwillknow.dev)。
 
-First, run the development server:
+本博客使用[**Notion**](https://www.notion.so)的database作为CMS。
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<aside>
+💡 关于前端，使用到了这些技术：
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</aside>
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Next.js
+- TailwindCss
+- Chakra UI
+- react-notion-x
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+<aside>
+💡 关于后端，使用到了这些技术：
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+</aside>
 
-## Learn More
+- koa-2
+- notion-client
 
-To learn more about Next.js, take a look at the following resources:
+关于本博客接下来的一些构想和待处理问题：
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x]  增加黑暗模式 **`点击header里的月亮/太阳`**
+- [x]  支持 PWA
+- [ ]  优化图片加载和代码压缩
+- [ ]  增加 i18n zh/en 支持
+- [ ]  优化首页 使更具个人特色
+- [ ]  加入更多动画支持
+- [ ]  为文章详情增加更多信息
+- [ ]  完善本站的其他页面
+- [ ]  为文章列表增加无数据处理
+- [ ]  完善项目 TypeScript 定义
+- [ ]  处理文章不存在的情况
+- [ ]  将服务端api作为next api 来进行开发 或使用 remix 进行重构
+- [ ]  考虑不强依赖notion的情况
+- [ ]  将项目完善为配置化notion博客并开源
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+如果对我的项目感兴趣或有任何建议都可以通过[telegram](https://www.t.me/chenjustcam)来联系我。
