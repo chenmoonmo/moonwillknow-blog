@@ -1,61 +1,56 @@
-import { ScaleFade, Skeleton, Tag, TagLabel } from '@chakra-ui/react'
-import { useMount, useUpdateEffect } from 'ahooks'
-import { PostCard } from 'components'
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { ReactElement, useEffect, useState } from 'react'
-import { getpostsListData } from 'slices/posts'
-import { useAppDispatch, useAppSelector } from 'utils'
+import { ScaleFade, Skeleton, Tag, TagLabel } from '@chakra-ui/react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import { PostCard } from 'components';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect, useState } from 'react';
+import { getpostsListData } from 'slices/posts';
+import { useAppDispatch, useAppSelector } from 'utils';
 
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
-import { intersection, remove, cloneDeep } from 'lodash'
-import { AnimatePresence, motion } from 'framer-motion'
+import { intersection, remove, cloneDeep } from 'lodash';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Posts: NextPage = (): ReactElement => {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const { isLoading, list, tags } = useAppSelector((state) => state.posts)
+  const dispatch = useAppDispatch();
+  const { isLoading, list, tags } = useAppSelector((state) => state.posts);
 
-  const [currentTags, setTags] = useState<string[]>(tags)
+  const [currentTags, setTags] = useState<string[]>(tags);
 
-  const [currentList, setList] = useState(list)
-
-  const handleToPosts = (id: string) => {
-    router.push(`/posts/${id}`)
-  }
+  const [currentList, setList] = useState(list);
 
   const handleFilte = (item: string) => {
-    let cloneTags = cloneDeep(currentTags)
+    let cloneTags = cloneDeep(currentTags);
 
     if (cloneTags.includes(item)) {
-      remove(cloneTags, (x) => x === item)
+      remove(cloneTags, (x) => x === item);
     } else {
-      cloneTags = [...cloneTags, item]
+      cloneTags = [...cloneTags, item];
     }
-    setTags(cloneTags)
+    setTags(cloneTags);
     setList(() => {
       return list.filter((item) => {
-        return intersection(item.tags, cloneTags).length > 0
-      })
-    })
-  }
+        return intersection(item.tags, cloneTags).length > 0;
+      });
+    });
+  };
 
   useMount(() => {
-    dispatch(getpostsListData())
-  })
+    dispatch(getpostsListData());
+  });
 
   useUpdateEffect(() => {
     if (currentTags.length === 0) {
-      setTags(tags)
+      setTags(tags);
     }
-  }, [tags])
+  }, [tags]);
 
   useUpdateEffect(() => {
     if (currentList.length === 0) {
-      setList(list)
+      setList(list);
     }
-  }, [list])
+  }, [list]);
 
   return (
     <main className={styles.container}>
@@ -64,7 +59,7 @@ const Posts: NextPage = (): ReactElement => {
           <Tag
             className={styles.tag}
             key={item}
-            size="sm"
+            size='sm'
             colorScheme={currentTags?.includes(item) ? 'messenger' : 'gray'}
             onClick={() => handleFilte(item)}
           >
@@ -85,34 +80,13 @@ const Posts: NextPage = (): ReactElement => {
         ) : (
           <AnimatePresence>
             {currentList?.map((data: any) => (
-              <motion.div
-                key={data.id}
-                layout
-                exit={{
-                  scale: 0.8,
-                  opacity: 0,
-                }}
-                animate={{
-                  scale: 1,
-                  opacity: 1,
-                }}
-                initial={{
-                  scale: 1.1,
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: 0.2,
-                  type: 'tween',
-                }}
-              >
-                <PostCard data={data} onClick={handleToPosts} />
-              </motion.div>
+              <PostCard key={data.id} data={data} />
             ))}
           </AnimatePresence>
         )}
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;

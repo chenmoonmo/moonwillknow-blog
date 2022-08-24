@@ -16,15 +16,11 @@ interface IProps {
 }
 
 const Home: NextPage<IProps> = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const { isLoading, list } = useAppSelector((state) => state.posts);
+  const {  setColorMode } = useColorMode();
 
-  const { colorMode, setColorMode } = useColorMode();
 
-  const handleToPosts = (id: string) => {
-    router.push(`/posts/${id}`);
-  };
 
   useMount(() => {
     if (
@@ -69,7 +65,7 @@ const Home: NextPage<IProps> = () => {
           list
             ?.slice(0, 6)
             ?.map((data: any) => (
-              <PostCard key={data.id} data={data} onClick={handleToPosts} />
+              <PostCard key={data.id} data={data}/>
             ))
         )}
       </div>

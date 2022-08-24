@@ -1,0 +1,4 @@
+dist/*
+src/modules/**/libs/*
+src/components/Icons/index.module.scss
+env/*

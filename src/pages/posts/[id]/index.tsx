@@ -1,22 +1,41 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { ReactElement, FC, useEffect, useState } from "react";
+import { ReactElement} from "react";
 import styles from "./index.module.scss";
 
 import { request } from "utils";
 import "react-notion-x/src/styles.css";
+import {motion} from 'framer-motion';
 
 import { defaultMapImageUrl, NotionRenderer } from "react-notion-x";
 import Link from "next/link";
 import Image from "next/image";
-import { Code } from "react-notion-x/build/third-party/code";
-import { Equation } from "react-notion-x/build/third-party/equation";
-import { Modal } from "react-notion-x/build/third-party/modal";
-import { Pdf } from "react-notion-x/build/third-party/pdf";
 import { useColorMode } from "@chakra-ui/react";
-import Error from "next/error";
 import NotFound from "pages/404";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const Code = dynamic<any>(() =>
+  import('react-notion-x/build/third-party/code').then((m) => m.Code)
+)
+
+const Equation = dynamic<any>(() =>
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+)
+
+const Pdf = dynamic<any>(
+  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
+  {
+    ssr: false
+  }
+)
+
+const Modal = dynamic(
+  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal),
+  {
+    ssr: false
+  }
+)
 
 interface IProps {
   data: any;
@@ -26,7 +45,6 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
   const { colorMode } = useColorMode();
   const router = useRouter();
   const { id } = router.query;
-  const [isMounted, setMount] = useState(false);
 
   const { title, summary } = data;
   const coverImg = defaultMapImageUrl(
@@ -34,13 +52,11 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
     data?.block
   ) as string;
 
-  useEffect(() => {
-    setMount(true);
-  }, []);
+
 
   // TODO: 抽出cover组件
   let cover = (
-    <div className={styles.cover}>
+    <motion.div className={styles.cover} layoutId={`cover-${data.id}`}>
       {data?.signed_urls?.[id as string] ? (
         <Image
           src={coverImg}
@@ -50,10 +66,11 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
           objectPosition="bottom"
         />
       ) : null}
-    </div>
+    </motion.div>
   );
 
-  if (isMounted && data === null) {
+
+  if ( data === null) {
     return <NotFound />;
   }
 
@@ -79,13 +96,13 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
         <meta property="og:image" content={coverImg} />
         <meta property="og:description" content={summary} />
       </Head>
-      {isMounted ? (
         <NotionRenderer
           darkMode={colorMode === "dark"}
           recordMap={data}
           fullPage={true}
           pageCover={cover}
           disableHeader
+          pageTitle={<motion.h1 layoutId={`title-${data.id}`}>{title}</ motion.h1>}
           components={{
             nextImage: Image,
             nextLink: Link,
@@ -95,7 +112,6 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
             Pdf,
           }}
         />
-      ) : null}
     </main>
   );
 };

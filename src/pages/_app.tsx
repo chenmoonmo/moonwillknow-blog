@@ -7,14 +7,10 @@ import { Provider } from "react-redux";
 import store from "store";
 import Head from "next/head";
 import { useEffect } from "react";
+import { AnimateSharedLayout } from "framer-motion";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(()=>{
-    console.log(1)
-    window.addEventListener('beforeinstallprompt',(envent)=>{
-      console.log('beforeinstallprompt',envent)
-    })
-  },[])
+
   return (
     <Provider store={store}>
       <ChakraProvider>
@@ -47,7 +43,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
         </Head>
         <Header />
+        <AnimateSharedLayout>
         <Component {...pageProps} />
+        </AnimateSharedLayout>
         <Footer />
       </ChakraProvider>
     </Provider>
