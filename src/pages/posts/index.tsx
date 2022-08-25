@@ -1,16 +1,14 @@
-import { ScaleFade, Skeleton, Tag, TagLabel } from '@chakra-ui/react';
+import { Skeleton, Tag, TagLabel } from '@chakra-ui/react';
 import { useMount, useUpdateEffect } from 'ahooks';
 import { PostCard } from 'components';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { getpostsListData } from 'slices/posts';
 import { useAppDispatch, useAppSelector } from 'utils';
 
 import styles from './index.module.scss';
 
 import { intersection, remove, cloneDeep } from 'lodash';
-import { AnimatePresence, motion } from 'framer-motion';
 
 const Posts: NextPage = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -18,7 +16,9 @@ const Posts: NextPage = (): ReactElement => {
 
   const [currentTags, setTags] = useState<string[]>(tags);
 
-  const [currentList, setList] = useState(list);
+  const currentList = list.filter((item) => {
+    return intersection(item.tags, currentTags).length > 0;
+  });
 
   const handleFilte = (item: string) => {
     let cloneTags = cloneDeep(currentTags);
@@ -29,15 +29,11 @@ const Posts: NextPage = (): ReactElement => {
       cloneTags = [...cloneTags, item];
     }
     setTags(cloneTags);
-    setList(() => {
-      return list.filter((item) => {
-        return intersection(item.tags, cloneTags).length > 0;
-      });
-    });
   };
 
+
   useMount(() => {
-    dispatch(getpostsListData());
+    if (list.length === 0) dispatch(getpostsListData());
   });
 
   useUpdateEffect(() => {
@@ -45,12 +41,6 @@ const Posts: NextPage = (): ReactElement => {
       setTags(tags);
     }
   }, [tags]);
-
-  useUpdateEffect(() => {
-    if (currentList.length === 0) {
-      setList(list);
-    }
-  }, [list]);
 
   return (
     <main className={styles.container}>
@@ -67,7 +57,13 @@ const Posts: NextPage = (): ReactElement => {
           </Tag>
         ))}
       </div>
-      <div className={styles.postsContainer}>
+      <div
+        className={styles.postsContainer}
+        variants={{
+          hidden: { opacity: 0, x: -200 },
+          visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
+        }}
+      >
         {isLoading ? (
           <>
             <Skeleton height={180} />
@@ -78,11 +74,7 @@ const Posts: NextPage = (): ReactElement => {
             <Skeleton height={180} />
           </>
         ) : (
-          <AnimatePresence>
-            {currentList?.map((data: any) => (
-              <PostCard key={data.id} data={data} />
-            ))}
-          </AnimatePresence>
+          currentList?.map((data: any) => <PostCard key={data.id} data={data} />)
         )}
       </div>
     </main>

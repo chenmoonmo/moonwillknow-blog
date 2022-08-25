@@ -55,15 +55,19 @@ const PostCard: FC<IProps> = ({ data }): ReactElement => {
           </motion.div>
         )}
         <motion.h1 layoutId={`title-${data.id}`}>{data.title}</motion.h1>
-        <time>{dayjs(data?.date?.start_date).format('LL')}</time>
-        <div className={styles.tags}>
+        <motion.div layoutId={`time-${data.id}`}>
+          <time>{dayjs(data?.date?.start_date).format('LL')}</time>
+        </motion.div>
+        <motion.div className={styles.tags} layoutId={`tags-${data.id}`}>
           {data?.tags?.map((item: string) => (
             <Tag key={item} size='sm' colorScheme='twitter'>
               <TagLabel>{item}</TagLabel>
             </Tag>
           ))}
-        </div>
-        <div className={styles.postInfo}>{data.summary}</div>
+        </motion.div>
+        <motion.div className={styles.postInfo} layoutId={`summary-${data.id}`}>
+          {data.summary}
+        </motion.div>
       </motion.div>
     </Link>
   );
