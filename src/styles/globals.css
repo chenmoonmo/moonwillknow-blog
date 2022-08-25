@@ -27,6 +27,13 @@ a {
   box-sizing: border-box;
 }
 
-.notion-frame {
+.notion-app {
   @apply dark:bg-[#1a202c] dark:text-gray-50;
+  min-height: 100% !important;
+}
+.notion-full-page {
+  padding-bottom: 0 !important;
+}
+.notion-page-scroller {
+  min-height: 100% !important;
 }

@@ -3,7 +3,7 @@ import { useMount, useUpdateEffect } from 'ahooks';
 import { PostCard } from 'components';
 import { NextPage } from 'next';
 import { ReactElement, useState } from 'react';
-import { getpostsListData } from 'slices/posts';
+import { getPostsListData } from 'slices/posts';
 import { useAppDispatch, useAppSelector } from 'utils';
 
 import styles from './index.module.scss';
@@ -33,7 +33,7 @@ const Posts: NextPage = (): ReactElement => {
 
 
   useMount(() => {
-    if (list.length === 0) dispatch(getpostsListData());
+    if (list.length === 0) dispatch(getPostsListData());
   });
 
   useUpdateEffect(() => {

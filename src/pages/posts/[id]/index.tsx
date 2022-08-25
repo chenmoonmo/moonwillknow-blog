@@ -1,108 +1,91 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { ReactElement} from "react";
-import styles from "./index.module.scss";
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import React, { ReactElement, useEffect } from 'react';
+import styles from './index.module.scss';
+import 'react-notion-x/src/styles.css';
+import { motion } from 'framer-motion';
 
-import { request } from "utils";
-import "react-notion-x/src/styles.css";
-import {motion} from 'framer-motion';
-
-import { defaultMapImageUrl, NotionRenderer } from "react-notion-x";
-import Link from "next/link";
-import Image from "next/image";
-import { useColorMode } from "@chakra-ui/react";
-import NotFound from "pages/404";
-import Head from "next/head";
-import dynamic from "next/dynamic";
+import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useColorMode, Skeleton } from '@chakra-ui/react';
+import Head from 'next/head';
+import dynamic from 'next/dynamic';
+import { useAppDispatch, useAppSelector } from 'utils';
+import { getPostDetailData } from 'slices/posts';
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
-)
+);
 
 const Equation = dynamic<any>(() =>
   import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
-)
+);
 
-const Pdf = dynamic<any>(
-  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
-  {
-    ssr: false
-  }
-)
+const Pdf = dynamic<any>(() => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf), {
+  ssr: false,
+});
 
-const Modal = dynamic(
-  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal),
-  {
-    ssr: false
-  }
-)
+const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), {
+  ssr: false,
+});
 
-interface IProps {
-  data: any;
-}
+const MotionSkeleton = motion(Skeleton);
 
-const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
+interface IProps {}
+
+const PostDetail: NextPage<IProps> = (): ReactElement => {
   const { colorMode } = useColorMode();
-  const router = useRouter();
-  const { id } = router.query;
+  const { id } = useRouter().query;
+  const dispatch = useAppDispatch();
+  const postDetail = useAppSelector((state) => {
+    return state.posts.posts?.[id as string];
+  });
 
-  const { title, summary } = data;
+  useEffect(() => {
+    if (id && !postDetail) {
+      dispatch(getPostDetailData(id as string));
+    }
+  }, [id]);
+
   const coverImg = defaultMapImageUrl(
-    data?.signed_urls?.[id as string],
-    data?.block
+    postDetail?.signed_urls?.[id as string],
+    postDetail?.block
   ) as string;
-
-
 
   // TODO: 抽出cover组件
   let cover = (
-    <motion.div className={styles.cover} layoutId={`cover-${data.id}`}>
-      {data?.signed_urls?.[id as string] ? (
-        <Image
-          src={coverImg}
-          alt=""
-          layout="fill"
-          objectFit="cover"
-          objectPosition="bottom"
-        />
+    <motion.div className={styles.cover} layoutId={`cover-${id}`}>
+      {postDetail?.signed_urls?.[id as string] ? (
+        <Image src={coverImg} alt='' layout='fill' objectFit='cover' objectPosition='bottom' />
       ) : null}
     </motion.div>
   );
 
-
-  if ( data === null) {
-    return <NotFound />;
-  }
-
   return (
     <main className={styles.postContainer}>
       <Head>
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.moonwillknow.dev" />
-        <meta name="twitter:title" content={title} />
-        <meta
-          name="twitter:description"
-          content={summary}
-        />
-        <meta name="twitter:creator" content="@chenjustcam" />
-        <meta name="twitter:image"  content={coverImg} />
-        <meta property="og:title" content={title} />
-        <meta property="og:site_name" content="Moon Will Know Blog" />
-        <meta property="og:type" content="article" />
-        <meta
-          property="og:url"
-          content={`https://moonwillknow.dev/posts/${id}`}
-        />
-        <meta property="og:image" content={coverImg} />
-        <meta property="og:description" content={summary} />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:url' content='https://www.moonwillknow.dev' />
+        <meta name='twitter:title' content={postDetail?.title} />
+        <meta name='twitter:description' content={postDetail?.summary} />
+        <meta name='twitter:creator' content='@chenjustcam' />
+        <meta name='twitter:image' content={coverImg} />
+        <meta property='og:title' content={postDetail?.title} />
+        <meta property='og:site_name' content='Moon Will Know Blog' />
+        <meta property='og:type' content='article' />
+        <meta property='og:url' content={`https://moonwillknow.dev/posts/${id}`} />
+        <meta property='og:image' content={coverImg} />
+        <meta property='og:description' content={postDetail?.summary} />
       </Head>
+      {postDetail ? (
         <NotionRenderer
-          darkMode={colorMode === "dark"}
-          recordMap={data}
+          darkMode={colorMode === 'dark'}
+          recordMap={postDetail}
           fullPage={true}
           pageCover={cover}
           disableHeader
-          pageTitle={<motion.h1 layoutId={`title-${data.id}`}>{title}</ motion.h1>}
+          pageTitle={<motion.div layoutId={`title-${id}`}>{postDetail?.title}</motion.div>}
           components={{
             nextImage: Image,
             nextLink: Link,
@@ -110,24 +93,34 @@ const PostDetail: NextPage<IProps> = ({ data }): ReactElement => {
             Equation,
             Modal,
             Pdf,
+            Collection: () => React.Fragment,
           }}
         />
+      ) : (
+        <>
+          <MotionSkeleton layoutId={`cover-${id}`} height='10rem' />
+          <MotionSkeleton
+            width='var(--notion-max-width)'
+            layoutId={`title-${id}`}
+            height='2.5rem'
+            my='3rem'
+            mx='auto'
+          />
+          <MotionSkeleton width='var(--notion-max-width)' height='2rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' m='1.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='2rem' m='1.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+        </>
+      )}
     </main>
   );
 };
-
-export async function getServerSideProps(context: any) {
-  const { id } = context.params;
-  let data = null;
-  try {
-    ({ data } = await request.get(`/notion/posts/${id}`));
-  } catch {}
-
-  return {
-    props: {
-      data,
-    },
-  };
-}
 
 export default PostDetail;

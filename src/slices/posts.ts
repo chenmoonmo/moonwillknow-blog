@@ -1,44 +1,49 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getPostsList } from "api";
+import { getPostsList, getPostDetail } from 'api';
 
-import {uniq} from 'lodash'
+import { uniq } from 'lodash';
 
 interface PostState {
   isLoading: boolean;
   list: any[];
   tags: string[];
+  posts: {
+    [id: keyof any]: any;
+  };
 }
 
 const initialState: PostState = {
   isLoading: false,
   list: [],
   tags: [],
+  posts: {},
 };
 
-export const getpostsListData = createAsyncThunk(
-  "posts/getPosts",
-  getPostsList
-);
+export const getPostsListData = createAsyncThunk('posts/getPosts', getPostsList);
+export const getPostDetailData = createAsyncThunk('posts/getPostDetail', getPostDetail);
 
 export const postSlice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getpostsListData.pending, (state) => {
+    builder.addCase(getPostsListData.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getpostsListData.fulfilled, (state, action) => {
+    builder.addCase(getPostsListData.fulfilled, (state, action) => {
       state.list = action.payload.data;
       state.tags = action.payload.data?.reduce((pre, cur) => {
         if (cur.tags) {
-          pre.push(...cur.tags)
-          pre = uniq(pre)
+          pre.push(...cur.tags);
+          pre = uniq(pre);
         }
-        return pre
-      }, [])
+        return pre;
+      }, []);
       state.isLoading = false;
+    });
+    builder.addCase(getPostDetailData.fulfilled, (state, action) => {
+      state.posts[action.meta.arg] = action.payload.data;
     });
   },
 });

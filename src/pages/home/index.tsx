@@ -3,7 +3,7 @@ import { Banner, PostCard } from 'components';
 
 import styles from './index.module.scss';
 import { useAppDispatch, useAppSelector } from 'utils';
-import { getpostsListData } from 'slices/posts';
+import { getPostsListData } from 'slices/posts';
 import { useRouter } from 'next/router';
 import { useMount } from 'ahooks';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -33,7 +33,7 @@ const Home: NextPage<IProps> = () => {
     }
 
     if (list.length === 0) {
-      dispatch(getpostsListData());
+      dispatch(getPostsListData());
     }
   });
 
