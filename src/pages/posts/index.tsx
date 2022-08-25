@@ -59,10 +59,6 @@ const Posts: NextPage = (): ReactElement => {
       </div>
       <div
         className={styles.postsContainer}
-        variants={{
-          hidden: { opacity: 0, x: -200 },
-          visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
-        }}
       >
         {isLoading ? (
           <>
