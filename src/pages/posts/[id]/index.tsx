@@ -1,18 +1,19 @@
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import React, { ReactElement, useEffect } from 'react';
-import styles from './index.module.scss';
 import 'react-notion-x/src/styles.css';
-import { motion } from 'framer-motion';
-
-import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useColorMode, Skeleton } from '@chakra-ui/react';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
+import styles from './index.module.scss';
 import { useAppDispatch, useAppSelector } from 'utils';
 import { getPostDetailData } from 'slices/posts';
+
+import React, { ReactElement, useEffect } from 'react';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
+import Head from 'next/head';
+import dynamic from 'next/dynamic';
+
+import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
+import { useColorMode, Skeleton } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -32,9 +33,7 @@ const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').the
 
 const MotionSkeleton = motion(Skeleton);
 
-interface IProps {}
-
-const PostDetail: NextPage<IProps> = (): ReactElement => {
+const PostDetail: NextPage = (): ReactElement => {
   const { colorMode } = useColorMode();
   const { id } = useRouter().query;
   const dispatch = useAppDispatch();
@@ -57,7 +56,7 @@ const PostDetail: NextPage<IProps> = (): ReactElement => {
   let cover = (
     <motion.div className={styles.cover} layoutId={`cover-${id}`}>
       {postDetail?.signed_urls?.[id as string] ? (
-        <Image src={coverImg} alt='' layout='fill' objectFit='cover' objectPosition='bottom' />
+        <Image src={coverImg} alt='' layout='fill' objectFit='cover' objectPosition='center center' />
       ) : null}
     </motion.div>
   );
@@ -98,25 +97,24 @@ const PostDetail: NextPage<IProps> = (): ReactElement => {
         />
       ) : (
         <>
-          <MotionSkeleton layoutId={`cover-${id}`} height='10rem' />
+          <MotionSkeleton layoutId={`cover-${id}`} className={styles.skeletonCover} />
           <MotionSkeleton
-            width='var(--notion-max-width)'
             layoutId={`title-${id}`}
-            height='2.5rem'
+            className={styles.skeletonItem}
+            h='2.5rem'
             my='3rem'
-            mx='auto'
           />
-          <MotionSkeleton width='var(--notion-max-width)' height='2rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' m='1.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='2rem' m='1.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
-          <MotionSkeleton width='var(--notion-max-width)' height='1rem' mt='0.5rem' mx='auto' />
+          <MotionSkeleton className={styles.skeletonItem} h='2rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' m='1.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='2rem' m='1.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
+          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
         </>
       )}
     </main>

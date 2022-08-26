@@ -37,8 +37,6 @@ const variants: Variants = {
 };
 
 const PostCard: FC<IProps> = ({ data }): ReactElement => {
-  const cover = data?.cover ? defaultMapImageUrl(data?.cover, data) : '';
-
   return (
     <Link href={`/posts/${data.id}`}>
       <motion.div
@@ -49,9 +47,9 @@ const PostCard: FC<IProps> = ({ data }): ReactElement => {
         animate='animate'
         initial='show'
       >
-        {cover && (
+        {data?.cover && (
           <motion.div className={styles.cover} layoutId={`cover-${data.id}`}>
-            <Image src={cover} alt='' layout='fill' objectFit='cover' />
+            <Image src={data.cover} alt='' layout='fill' objectFit='cover' />
           </motion.div>
         )}
         <motion.h1 layoutId={`title-${data.id}`}>{data.title}</motion.h1>

@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getPostsList, getPostDetail } from 'api';
 
 import { uniq } from 'lodash';
+import { defaultMapImageUrl } from 'react-notion-x';
 
 interface PostState {
   isLoading: boolean;
@@ -32,7 +33,10 @@ export const postSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getPostsListData.fulfilled, (state, action) => {
-      state.list = action.payload.data;
+      state.list = action.payload.data.map((item) => {
+        item.cover = item?.cover ? defaultMapImageUrl(item?.cover, item) : '';
+        return item;
+      });
       state.tags = action.payload.data?.reduce((pre, cur) => {
         if (cur.tags) {
           pre.push(...cur.tags);
