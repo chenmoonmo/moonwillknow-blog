@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url(./markdown.css);
+/* @import url(./markdown.css); */
 @import url(./prism-one-dark.css);
 
 
