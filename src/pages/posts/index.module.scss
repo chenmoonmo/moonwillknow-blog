@@ -1,7 +1,7 @@
 .container {
   @apply min-h-screen max-w-7xl mx-auto px-5;
   .tags {
-    @apply mt-10 flex flex-wrap gap-4;
+    @apply mt-10 flex flex-wrap gap-4 items-center;
     .tag {
       @apply cursor-pointer select-none;
     }

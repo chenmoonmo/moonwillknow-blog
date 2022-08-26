@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 function App({ Component, pageProps }: any) {
   const { colorMode } = useColorMode();
-  console.log(colorMode);
+  
   return (
     <>
       <Head>
