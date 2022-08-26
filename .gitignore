@@ -36,4 +36,4 @@ yarn-error.log*
 
 /pubilc/sw*
 /pubilc/workbox*
-/pubilc/work*
+/pubilc/worker*
