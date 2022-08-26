@@ -47,17 +47,22 @@ const PostDetail: NextPage = (): ReactElement => {
     }
   }, [id]);
 
-  const coverImg = defaultMapImageUrl(
-    postDetail?.signed_urls?.[id as string],
-    postDetail?.block
-  ) as string;
+  const coverImg = postDetail?.cover
+    ? (defaultMapImageUrl(postDetail?.cover, postDetail as any) as string)
+    : '';
 
   // TODO: 抽出cover组件
   let cover = (
     <motion.div className={styles.cover} layoutId={`cover-${id}`}>
-      {postDetail?.signed_urls?.[id as string] ? (
-        <Image src={coverImg} alt='' layout='fill' objectFit='cover' objectPosition='center center' />
-      ) : null}
+      {coverImg && (
+        <Image
+          src={coverImg}
+          alt=''
+          layout='fill'
+          objectFit='cover'
+          objectPosition='center center'
+        />
+      )}
     </motion.div>
   );
 
