@@ -7,7 +7,10 @@ const RouteLoading = () => {
   const [isRouteChanging, setIsRouteChanging] = useState(false);
 
   useEffect(() => {
-    const handleRouteChangeStart = () => {
+    const handleRouteChangeStart = (path: string) => {
+      if (path === router.asPath) {
+        return;
+      }
       setIsRouteChanging(true);
     };
 
