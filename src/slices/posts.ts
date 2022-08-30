@@ -9,20 +9,20 @@ interface PostState {
   isLoading: boolean;
   list: any[];
   tags: string[];
-  posts: {
-    [id: keyof any]: any;
-  };
+  // posts: {
+  //   [id: keyof any]: any;
+  // };
 }
 
 const initialState: PostState = {
   isLoading: false,
   list: [],
   tags: [],
-  posts: {},
+  // posts: {},
 };
 
 export const getPostsListData = createAsyncThunk('posts/getPosts', getPostsList);
-export const getPostDetailData = createAsyncThunk('posts/getPostDetail', getPostDetail);
+// export const getPostDetailData = createAsyncThunk('posts/getPostDetail', getPostDetail);
 
 export const postSlice = createSlice({
   name: 'posts',
@@ -46,9 +46,9 @@ export const postSlice = createSlice({
       }, []);
       state.isLoading = false;
     });
-    builder.addCase(getPostDetailData.fulfilled, (state, action) => {
-      state.posts[action.meta.arg] = action.payload.data;
-    });
+    // builder.addCase(getPostDetailData.fulfilled, (state, action) => {
+    //   state.posts[action.meta.arg] = action.payload.data;
+    // });
   },
 });
 

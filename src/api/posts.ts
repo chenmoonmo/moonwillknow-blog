@@ -5,7 +5,7 @@ type GetPostsList = (data?: { lastId?: string; pageSize: number }) => Promise<{
   data: any[];
 }>;
 
-type getPostDetail = (id: string) => Promise<{
+type GetPostDetail = (id: string) => Promise<{
   data: any;
 }>;
 
@@ -14,4 +14,4 @@ export const getPostsList: GetPostsList = (data) =>
     data,
   });
 
-export const getPostDetail: getPostDetail = (id) => request.get(`/notion/posts/${id}`);
+export const getPostDetail: GetPostDetail = (id) => request.get(`/notion/posts/${id}`);

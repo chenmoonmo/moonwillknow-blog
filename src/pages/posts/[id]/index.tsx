@@ -1,10 +1,8 @@
 import 'react-notion-x/src/styles.css';
 import styles from './index.module.scss';
-import { useAppDispatch, useAppSelector } from 'utils';
-import { getPostDetailData } from 'slices/posts';
 
-import React, { ReactElement, useEffect } from 'react';
-import { NextPage } from 'next';
+import React, { ReactElement } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +12,7 @@ import dynamic from 'next/dynamic';
 import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
 import { useColorMode, Skeleton } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { getPostDetail } from 'api';
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -31,22 +30,13 @@ const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').the
   ssr: false,
 });
 
-const MotionSkeleton = motion(Skeleton);
+interface IProps {
+  data: any;
+}
 
-const PostDetail: NextPage = (): ReactElement => {
+const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
   const { colorMode } = useColorMode();
   const { id } = useRouter().query;
-  const dispatch = useAppDispatch();
-  const postDetail = useAppSelector((state) => {
-    return state.posts.posts?.[id as string];
-  });
-
-  useEffect(() => {
-    if (id && !postDetail) {
-      dispatch(getPostDetailData(id as string));
-    }
-  }, [id]);
-
   const coverImg = postDetail?.cover
     ? (defaultMapImageUrl(postDetail?.cover, postDetail as any) as string)
     : '';
@@ -67,7 +57,7 @@ const PostDetail: NextPage = (): ReactElement => {
   );
 
   return (
-    <main className={styles.postContainer}>
+    <>
       <Head>
         <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:url' content='https://www.moonwillknow.dev' />
@@ -82,7 +72,7 @@ const PostDetail: NextPage = (): ReactElement => {
         <meta property='og:image' content={coverImg} />
         <meta property='og:description' content={postDetail?.summary} />
       </Head>
-      {postDetail ? (
+      <main className={styles.postContainer}>
         <NotionRenderer
           darkMode={colorMode === 'dark'}
           recordMap={postDetail}
@@ -100,30 +90,19 @@ const PostDetail: NextPage = (): ReactElement => {
             Collection: () => React.Fragment,
           }}
         />
-      ) : (
-        <>
-          <MotionSkeleton layoutId={`cover-${id}`} className={styles.skeletonCover} />
-          <MotionSkeleton
-            layoutId={`title-${id}`}
-            className={styles.skeletonItem}
-            h='2.5rem'
-            my='3rem'
-          />
-          <MotionSkeleton className={styles.skeletonItem} h='2rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' m='1.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='2rem' m='1.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-          <MotionSkeleton className={styles.skeletonItem} h='1rem' mt='0.5rem' />
-        </>
-      )}
-    </main>
+      </main>
+    </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const { data } = await getPostDetail(id as string);
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 export default PostDetail;
