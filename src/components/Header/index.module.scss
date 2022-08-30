@@ -13,7 +13,7 @@
       @apply hidden absolute flex-col gap-3 items-center right-0 top-10 bg-transparent;
       .menuItem {
         @apply font-bold text-xl  cursor-pointer select-none hover:text-green-600;
-        .isActive {
+        &.isActive {
           @apply text-green-600;
         }
       }
@@ -44,4 +44,7 @@
 
 .drawerMenu {
   @apply flex flex-col gap-3 pt-8 text-3xl font-bold;
+  .isActive {
+    @apply text-green-600;
+  }
 }

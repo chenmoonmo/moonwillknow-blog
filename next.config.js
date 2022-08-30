@@ -1,31 +1,30 @@
 /** @type {import('next').NextConfig} */
-const path = require("path");
+const path = require('path');
 
-const withPWA = require("next-pwa");
+const withPWA = require('next-pwa');
 
 const nextConfig = {
   pwa: {
-    dest: "public",
-    customWorkerDir: "./worker",
+    dest: 'public',
+    customWorkerDir: './worker',
   },
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ["www.notion.so", "s3.us-west-2.amazonaws.com"],
+    domains: ['www.notion.so', 's3.us-west-2.amazonaws.com'],
   },
-  compress: true,
-  async redirects() {
+  async rewrites() {
     return [
       {
-        source: "/",
-        destination: "/home",
-        permanent: true,
+        source: '/',
+        destination: '/home',
       },
     ];
   },
+  compress: true,
 };
 
 module.exports = withPWA(nextConfig);

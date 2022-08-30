@@ -4,12 +4,10 @@ import { Banner, PostCard } from 'components';
 import styles from './index.module.scss';
 import { useAppDispatch, useAppSelector } from 'utils';
 import { getPostsListData } from 'slices/posts';
-import { useRouter } from 'next/router';
 import { useMount } from 'ahooks';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { IconButton, Skeleton, useColorMode } from '@chakra-ui/react';
-import { useEffect } from 'react';
 
 interface IProps {
   // list: any;
@@ -39,6 +37,7 @@ const Home: NextPage<IProps> = () => {
 
   return (
     <main className={styles.homeContainer}>
+      <div className={styles.test}></div>
       <Banner />
       <h2 className={styles.sectionTitle}>
         <span>LATEST POSTS 🌝</span>
