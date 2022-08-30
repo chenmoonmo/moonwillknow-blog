@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import 'normalize.css/normalize.css';
 import type { AppProps } from 'next/app';
-import { Footer, Header } from '../components';
+import { Footer, Header, RouteLoading } from '../components';
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import store from 'store';
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 function App({ Component, pageProps }: any) {
   const { colorMode } = useColorMode();
-  
+
   return (
     <>
       <Head>
@@ -48,6 +48,7 @@ function App({ Component, pageProps }: any) {
       <AnimatePresence>
         <Component {...pageProps} />
       </AnimatePresence>
+      <RouteLoading />
       <Footer />
     </>
   );
