@@ -10,7 +10,7 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
 import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
-import { useColorMode, Skeleton } from '@chakra-ui/react';
+import { useColorMode } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { getPostDetail } from 'api';
 
