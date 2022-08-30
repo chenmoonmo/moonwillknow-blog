@@ -37,3 +37,5 @@ yarn-error.log*
 /pubilc/sw*
 /pubilc/workbox*
 /pubilc/worker*
+sw.js.map
+sw.js
