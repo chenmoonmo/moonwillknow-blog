@@ -14,7 +14,7 @@
       .menuItem {
         @apply font-bold text-xl  cursor-pointer select-none hover:text-green-600;
         &.isActive {
-          @apply text-green-600;
+          @apply text-green-800 font-extrabold;
         }
       }
     }
@@ -45,6 +45,6 @@
 .drawerMenu {
   @apply flex flex-col gap-3 pt-8 text-3xl font-bold;
   .isActive {
-    @apply text-green-600;
+    @apply text-green-800 font-extrabold;
   }
 }
