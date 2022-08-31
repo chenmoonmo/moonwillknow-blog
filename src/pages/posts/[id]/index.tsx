@@ -60,9 +60,10 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
     <>
       <Head>
         <meta name='twitter:card' content='summary_large_image' />
-        <meta name='twitter:url' content='https://www.moonwillknow.dev' />
+        <meta name='twitter:url' content={`https://moonwillknow.dev/posts/${id}`} />
         <meta name='twitter:title' content={postDetail?.title} />
         <meta name='twitter:description' content={postDetail?.summary} />
+        <meta name='twitter:site' content='@chenjustcam' />
         <meta name='twitter:creator' content='@chenjustcam' />
         <meta name='twitter:image' content={coverImg} />
         <meta property='og:title' content={postDetail?.title} />
