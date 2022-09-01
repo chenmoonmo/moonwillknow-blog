@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
 
-const withPWA = require('next-pwa')
-// ({
-//   dest: 'public',
-//   customWorkerDir: './worker',
-// });
+const withPWA = require('next-pwa')({ dest: 'public', customWorkerDir: './worker' });
 
 const nextConfig = withPWA({
   reactStrictMode: true,
