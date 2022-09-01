@@ -37,7 +37,6 @@ const Home: NextPage<IProps> = () => {
 
   return (
     <main className={styles.homeContainer}>
-      <div className={styles.test}></div>
       <Banner />
       <h2 className={styles.sectionTitle}>
         <span>LATEST POSTS 🌝</span>
