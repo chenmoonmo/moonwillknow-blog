@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
 
-const withPWA = require('next-pwa')({ dest: 'public', customWorkerDir: './worker' });
+const withPWA = require('next-pwa');
+const runtimeCaching = require('next-pwa/cache');
 
 const nextConfig = withPWA({
+  pwa: {
+    dest: 'public',
+    customWorkerDir: './worker',
+    runtimeCaching,
+    disable: process.env.NODE_ENV === 'development',
+  },
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {

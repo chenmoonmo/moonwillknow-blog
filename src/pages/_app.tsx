@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import 'normalize.css/normalize.css';
 import type { AppProps } from 'next/app';
 import { Footer, Header } from '../components';
