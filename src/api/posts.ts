@@ -1,3 +1,4 @@
+import { defaultMapImageUrl } from 'react-notion-x';
 import { request } from 'utils';
 
 // TODO: 返回类型问题
@@ -9,9 +10,14 @@ type GetPostDetail = (id: string) => Promise<{
   data: any;
 }>;
 
-export const getPostsList: GetPostsList = (data) =>
-  request.get('/notion/posts', {
-    data,
-  });
+export const getPostsList: GetPostsList = async () => {
+  const { data } = await request.get('/notion/posts');
+  return {
+    data: data.map((item: any) => {
+      item.cover = item?.cover ? defaultMapImageUrl(item?.cover, item) : '';
+      return item;
+    }),
+  };
+};
 
 export const getPostDetail: GetPostDetail = (id) => request.get(`/notion/posts/${id}`);

@@ -13,6 +13,9 @@ import { defaultMapImageUrl, NotionRenderer } from 'react-notion-x';
 import { useColorMode } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { getPostDetail } from 'api';
+import { useMixpanel } from 'mixpanel';
+import { useMount } from 'ahooks';
+import { title } from 'process';
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -37,6 +40,8 @@ interface IProps {
 const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
   const { colorMode } = useColorMode();
   const { id } = useRouter().query;
+  const { read } = useMixpanel();
+
   const coverImg = postDetail?.cover
     ? (defaultMapImageUrl(postDetail?.cover, postDetail as any) as string)
     : '';
@@ -55,6 +60,10 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
       )}
     </motion.div>
   );
+
+  useMount(() => {
+    read(id as string, postDetail?.title);
+  });
 
   return (
     <>

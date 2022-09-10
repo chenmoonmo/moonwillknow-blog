@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
 
-const withPWA = require('next-pwa');
+const withPWA = require('next-pwa')({ dest: 'public', customWorkerDir: './worker' });
 
-const nextConfig = {
-  pwa: {
-    dest: 'public',
-    customWorkerDir: './worker',
-  },
+const nextConfig = withPWA({
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {
@@ -25,6 +21,6 @@ const nextConfig = {
     ];
   },
   compress: true,
-};
+});
 
-module.exports = withPWA(nextConfig);
+module.exports = nextConfig;

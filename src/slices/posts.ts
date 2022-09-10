@@ -33,10 +33,11 @@ export const postSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getPostsListData.fulfilled, (state, action) => {
-      state.list = action.payload.data.map((item) => {
-        item.cover = item?.cover ? defaultMapImageUrl(item?.cover, item) : '';
-        return item;
-      });
+      // state.list = action.payload.data.map((item) => {
+      //   item.cover = item?.cover ? defaultMapImageUrl(item?.cover, item) : '';
+      //   return item;
+      // });
+      state.list = action.payload.data;
       state.tags = action.payload.data?.reduce((pre, cur) => {
         if (cur.tags) {
           pre.push(...cur.tags);

@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import 'normalize.css/normalize.css';
 import type { AppProps } from 'next/app';
 import { Footer, Header, RouteLoading } from '../components';
@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import Head from 'next/head';
 import { AnimatePresence } from 'framer-motion';
+import { useMount } from 'ahooks';
+import { useMixpanel } from 'mixpanel';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,7 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 function App({ Component, pageProps }: any) {
   const { colorMode } = useColorMode();
-
+  const { visit } = useMixpanel();
+  useMount(() => {
+    visit();
+  });
   return (
     <>
       <Head>
