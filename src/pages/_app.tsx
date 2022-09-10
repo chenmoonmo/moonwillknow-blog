@@ -48,7 +48,7 @@ function App({ Component, pageProps }: any) {
       <AnimatePresence>
         <Component {...pageProps} />
       </AnimatePresence>
-      <RouteLoading />
+      {/* <RouteLoading /> */}
       <Footer />
     </>
   );

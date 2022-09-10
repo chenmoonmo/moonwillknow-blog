@@ -1,0 +1,7 @@
+.aboutContainer {
+  @apply relative max-w-7xl mx-40 mt-40;
+  height: calc(100vh - 8rem);
+  .background {
+    @apply absolute w-full h-96 bg-white rounded-sm bg-opacity-95 top-0 -left-20;
+  }
+}
