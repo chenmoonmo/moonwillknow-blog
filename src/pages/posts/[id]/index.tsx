@@ -106,7 +106,17 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
+  console.log('id',id)
+  try {
+    const { data } = await getPostDetail(id as string);
+    console.log("data:",data)
+
+  } catch (e) {
+    console.log('error',e)
+  }
   const { data } = await getPostDetail(id as string);
+
+
   return {
     props: {
       data,

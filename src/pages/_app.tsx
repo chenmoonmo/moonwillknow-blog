@@ -43,7 +43,6 @@ function App({ Component, pageProps }: any) {
         <link rel='manifest' href='/manifest.json' />
         <link rel='apple-touch-icon' href='/icons/icon-128x128.png' />
         <link rel='shortcut icon' href='/favicon.ico' />
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />
         <meta
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'

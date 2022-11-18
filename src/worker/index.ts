@@ -35,13 +35,11 @@ const PRECACHE = 'precache-v1';
 const RUNTIME = 'runtime';
 
 // A list of local resources we always want to be cached.
-const PRECACHE_URLS = [
-  '/_next/',
-];
+const PRECACHE_URLS = ['/_next/image?url=%2Fimages%2Fcat.JPG&w=3840&q=100'];
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener('install', (event) => {
-  console.log('worker installed')
+  console.log('worker installed');
   event.waitUntil(
     caches
       .open(PRECACHE)

@@ -1,7 +1,29 @@
 .aboutContainer {
-  @apply relative max-w-7xl mx-40 mt-40;
-  height: calc(100vh - 8rem);
-  .background {
-    @apply absolute w-full h-96 bg-white rounded-sm bg-opacity-95 top-0 -left-20;
+  @apply relative max-w-2xl px-10 py-5 container mx-auto text-base font-medium leading-6 md:py-20;
+  min-height: calc(100vh - 8rem);
+  article {
+    @apply p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50;
+  }
+
+  p {
+    @apply mt-2;
+  }
+  .findMe {
+    @apply flex  cursor-pointer items-center justify-center mt-10;
+    .findMeItem {
+      @apply min-h-[72px] relative text-6xl mx-3 select-none md:mx-10 transition-all;
+
+      &::after {
+        @apply absolute top-0 left-1/2 content-[attr(data-name)]  text-base -translate-y-full -translate-x-1/2 invisible opacity-0 transition-opacity;
+      }
+
+      &:hover {
+        @apply drop-shadow-lg;
+      }
+
+      &:hover::after {
+        @apply visible opacity-100;
+      }
+    }
   }
 }
