@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getPostsList, getPostDetail } from 'api';
+import { getPostsList } from 'api';
 
 import { uniq } from 'lodash';
-import { defaultMapImageUrl } from 'react-notion-x';
 
 interface PostState {
   isLoading: boolean;

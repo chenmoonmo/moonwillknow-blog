@@ -1,15 +1,12 @@
 .container {
-  @apply relative h-screen overflow-hidden flex justify-center items-center text-6xl font-bold;
+  @apply relative h-screen overflow-hidden flex justify-center items-center text-8xl font-bold;
   height: calc(100vh - 8rem);
   .textLayer {
     @apply absolute bg-clip-text text-transparent break-all overflow-hidden rotate-45 select-none;
     width: 200%;
-    background-image: linear-gradient(
-      rgb(255, 118, 152) 29.17%,
-      rgb(40, 0, 255) 100%
-    );
+    background-image: linear-gradient(rgb(255, 118, 152) 29.17%, rgb(40, 0, 255) 100%);
     .text {
-      @apply text-black text-4xl;
+      @apply text-black text-7xl;
     }
   }
   @screen md {

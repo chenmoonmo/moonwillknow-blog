@@ -1,7 +1,6 @@
 import { FC, ReactElement, useState } from 'react';
 import styles from './index.module.scss';
 import Image from 'next/image';
-import { defaultMapImageUrl } from 'react-notion-x';
 import dayjs from 'dayjs';
 
 import localizedFormat from 'dayjs/plugin/localizedFormat';

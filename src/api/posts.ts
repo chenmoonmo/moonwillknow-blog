@@ -20,4 +20,9 @@ export const getPostsList: GetPostsList = async () => {
   };
 };
 
-export const getPostDetail: GetPostDetail = (id) => request.get(`/notion/posts/${id}`);
+export const getPostDetail: GetPostDetail = async (id) => {
+  const { data } = await request.get(`/notion/posts/${id}`);
+  data.cover = data?.cover ? (defaultMapImageUrl(data?.cover, data as any) as string) : '';
+
+  return data;
+};

@@ -1,7 +1,7 @@
 import 'react-notion-x/src/styles.css';
 import styles from './index.module.scss';
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 import { getPostDetail } from 'api';
 import { useMixpanel } from 'mixpanel';
 import { useMount } from 'ahooks';
-import { title } from 'process';
+import NotFound from 'pages/404';
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -35,35 +35,41 @@ const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').the
 
 interface IProps {
   data: any;
+  error: any;
 }
 
-const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
+const PageCover: React.FC<{ id: string; cover: string }> = ({ id, cover }) => {
+  return (
+    <motion.div className={styles.cover} layoutId={`cover-${id}`}>
+      <Image src={cover} alt='' layout='fill' objectFit='cover' objectPosition='center center' />
+    </motion.div>
+  );
+};
+
+const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement => {
   const { colorMode } = useColorMode();
   const { id } = useRouter().query;
   const { read } = useMixpanel();
 
-  const coverImg = postDetail?.cover
-    ? (defaultMapImageUrl(postDetail?.cover, postDetail as any) as string)
-    : '';
-
   // TODO: 抽出cover组件
-  let cover = (
-    <motion.div className={styles.cover} layoutId={`cover-${id}`}>
-      {coverImg && (
-        <Image
-          src={coverImg}
-          alt=''
-          layout='fill'
-          objectFit='cover'
-          objectPosition='center center'
-        />
-      )}
-    </motion.div>
-  );
+  let cover = useMemo(() => {
+    if (!postDetail?.cover) {
+      return null;
+    }
+    return <PageCover id={id as string} cover={postDetail.cover} />;
+  }, [id, postDetail?.cover]);
+
+  const title = useMemo(() => {
+    return <motion.div layoutId={`title-${id}`}>{postDetail?.title}</motion.div>;
+  }, [id, postDetail?.title]);
 
   useMount(() => {
     read(id as string, postDetail?.title);
   });
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -73,12 +79,12 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
         <meta name='twitter:title' content={postDetail?.title} />
         <meta name='twitter:description' content={postDetail?.summary} />
         <meta name='twitter:creator' content='@chenjustcam' />
-        <meta name='twitter:image' content={coverImg} />
+        <meta name='twitter:image' content={postDetail?.cover} />
         <meta property='og:title' content={postDetail?.title} />
         <meta property='og:site_name' content='Moon Will Know Blog' />
         <meta property='og:type' content='article' />
         <meta property='og:url' content={`https://moonwillknow.dev/posts/${id}`} />
-        <meta property='og:image' content={coverImg} />
+        <meta property='og:image' content={postDetail?.cover} />
         <meta property='og:description' content={postDetail?.summary} />
       </Head>
       <main className={styles.postContainer}>
@@ -88,7 +94,7 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
           fullPage={true}
           pageCover={cover}
           disableHeader
-          pageTitle={<motion.div layoutId={`title-${id}`}>{postDetail?.title}</motion.div>}
+          pageTitle={title}
           components={{
             nextImage: Image,
             nextLink: Link,
@@ -105,23 +111,24 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail }): ReactElement => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  console.log('id',id)
   try {
-    const { data } = await getPostDetail(id as string);
-    console.log("data:",data)
-
+    const { id } = context.query;
+    const data = await getPostDetail(id as string);
+    console.log('data:', data);
+    return {
+      props: {
+        data,
+      },
+    };
   } catch (e) {
-    console.log('error',e)
+    console.log('error', e);
+    return {
+      props: {
+        data: {},
+        error: true,
+      },
+    };
   }
-  const { data } = await getPostDetail(id as string);
-
-
-  return {
-    props: {
-      data,
-    },
-  };
 };
 
 export default PostDetail;
