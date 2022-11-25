@@ -34,8 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-/pubilc/sw*
-/pubilc/workbox*
-/pubilc/worker*
-sw.js.map
-sw.js
+/public/sw*
+/public/work*

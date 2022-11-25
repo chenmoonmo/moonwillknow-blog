@@ -1,7 +1,7 @@
 import '../styles/globals.scss';
 import 'normalize.css/normalize.css';
 import type { AppProps } from 'next/app';
-import { Footer, Header, RouteLoading } from '../components';
+import { Footer } from '../components';
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import store from 'store';
@@ -9,6 +9,12 @@ import Head from 'next/head';
 import { AnimatePresence } from 'framer-motion';
 import { useMount } from 'ahooks';
 import { useMixpanel } from 'mixpanel';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+const Header = dynamic(() => import('../components/Header'),{
+  suspense: true,
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -23,9 +29,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 function App({ Component, pageProps }: any) {
   const { colorMode } = useColorMode();
   const { visit } = useMixpanel();
+
   useMount(() => {
     visit();
   });
+
   return (
     <>
       <Head>
@@ -48,7 +56,9 @@ function App({ Component, pageProps }: any) {
           content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
         />
       </Head>
-      <Header />
+      <Suspense fallback={<></>}>
+        <Header />
+      </Suspense>
       <AnimatePresence>
         <Component {...pageProps} />
       </AnimatePresence>
