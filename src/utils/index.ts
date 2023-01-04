@@ -1,2 +1,1 @@
-export { default as request } from "./axios";
-export * from './hooks'
+export { default as request } from "./request";

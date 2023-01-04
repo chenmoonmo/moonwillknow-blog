@@ -2,7 +2,6 @@ import mixpanel from 'mixpanel-browser';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useMixpanel = () => {
-  
   mixpanel.init('b5224da04446c5e2daeb53b7cd513461', {
     debug: process.env.NODE_ENV === 'development',
   });

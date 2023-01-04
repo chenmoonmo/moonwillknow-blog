@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { Banner, PostCard } from 'components';
 
 import styles from './index.module.scss';
-import { useAppDispatch, useAppSelector } from 'utils';
+import { useAppDispatch, useAppSelector } from 'store';
 import { getPostsListData } from 'slices/posts';
 import { useMount } from 'ahooks';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -19,20 +19,16 @@ const Home: NextPage<IProps> = () => {
   const { setColorMode } = useColorMode();
 
   useMount(() => {
-    if (
+    const systemTheme =
       localStorage.theme === 'dark' ||
       (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      setColorMode('dark');
-      localStorage.theme = 'dark';
-    } else {
-      setColorMode('light');
-      localStorage.theme = 'light';
-    }
+        ? 'dark'
+        : 'light';
 
-    if (list.length === 0) {
-      dispatch(getPostsListData());
-    }
+    setColorMode(systemTheme);
+    localStorage.theme = systemTheme;
+
+    list.length === 0 && dispatch(getPostsListData());
   });
 
   return (
