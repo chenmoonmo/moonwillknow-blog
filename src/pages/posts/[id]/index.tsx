@@ -1,7 +1,7 @@
 import 'react-notion-x/src/styles.css';
 import styles from './index.module.scss';
 
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useEffect, useMemo } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -13,9 +13,13 @@ import { NotionRenderer } from 'react-notion-x';
 import { useColorMode } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { getPostDetail } from 'api';
-import { useMixpanel } from 'mixpanel';
-import { useMount } from 'ahooks';
+import { useMixpanel } from 'hooks';
 import NotFound from 'pages/404';
+
+interface IProps {
+  data: any;
+  error: any;
+}
 
 const Code = dynamic<any>(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -33,17 +37,12 @@ const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').the
   ssr: false,
 });
 
-interface IProps {
-  data: any;
-  error: any;
-}
-
 const PageCover: React.FC<{ id: string; cover: string }> = ({ id, cover }) => {
-  return (
+  return cover ? (
     <motion.div className={styles.cover} layoutId={`cover-${id}`}>
       <Image src={cover} alt='' layout='fill' objectFit='cover' objectPosition='center center' />
     </motion.div>
-  );
+  ) : null;
 };
 
 const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement => {
@@ -51,21 +50,13 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement
   const { id } = useRouter().query;
   const { read } = useMixpanel();
 
-  // TODO: 抽出cover组件
-  let cover = useMemo(() => {
-    if (!postDetail?.cover) {
-      return null;
-    }
-    return <PageCover id={id as string} cover={postDetail.cover} />;
-  }, [id, postDetail?.cover]);
-
   const title = useMemo(() => {
     return <motion.div layoutId={`title-${id}`}>{postDetail?.title}</motion.div>;
   }, [id, postDetail?.title]);
 
-  useMount(() => {
+  useEffect(() => {
     read(id as string, postDetail?.title);
-  });
+  }, []);
 
   if (error) {
     return <NotFound />;
@@ -75,7 +66,7 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement
     <>
       <Head>
         <meta name='twitter:card' content='summary_large_image' />
-        <meta name='twitter:url' content='https://www.moonwillknow.dev' />
+        <meta name='twitter:url' content={`https://moonwillknow.dev/posts/${id}`} />
         <meta name='twitter:title' content={postDetail?.title} />
         <meta name='twitter:description' content={postDetail?.summary} />
         <meta name='twitter:creator' content='@chenjustcam' />
@@ -92,7 +83,7 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement
           darkMode={colorMode === 'dark'}
           recordMap={postDetail}
           fullPage={true}
-          pageCover={cover}
+          pageCover={<PageCover id={id as string} cover={postDetail.cover} />}
           disableHeader
           pageTitle={title}
           components={{
@@ -102,7 +93,7 @@ const PostDetail: NextPage<IProps> = ({ data: postDetail, error }): ReactElement
             Equation,
             Modal,
             Pdf,
-            Collection: () => React.Fragment,
+            Collection: React.Fragment,
           }}
         />
       </main>
@@ -114,14 +105,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { id } = context.query;
     const data = await getPostDetail(id as string);
-    console.log('data:', data);
     return {
       props: {
         data,
       },
     };
   } catch (e) {
-    console.log('error', e);
     return {
       props: {
         data: {},

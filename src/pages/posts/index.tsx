@@ -1,10 +1,10 @@
 import { Skeleton, Tag, TagLabel, Tooltip } from '@chakra-ui/react';
-import { useMount, useUpdateEffect } from 'ahooks';
+import { useUpdateEffect } from 'ahooks';
 import { PostCard } from 'components';
 import { NextPage } from 'next';
-import { ReactElement, useState, MouseEvent } from 'react';
+import { ReactElement, useState, MouseEvent, useEffect, useMemo } from 'react';
 import { getPostsListData } from 'slices/posts';
-import { useAppDispatch, useAppSelector } from 'utils';
+import { useAppDispatch, useAppSelector } from 'store';
 
 import styles from './index.module.scss';
 
@@ -17,23 +17,20 @@ const Posts: NextPage = (): ReactElement => {
 
   const [currentTags, setTags] = useState<string[]>(tags);
 
-  const currentList = list.filter((item) => {
-    return intersection(item.tags, currentTags).length > 0;
-  });
+  const currentList = useMemo(
+    () => list.filter((item) => intersection(item.tags, currentTags).length > 0),
+    [list, currentTags]
+  );
 
   const handleFilte = (e: MouseEvent<HTMLSpanElement>, item: string) => {
     e.preventDefault();
+
     if (e.metaKey || e.ctrlKey) {
-      setTags((preTag) => {
-        if (preTag.includes(item)) {
-          return tags.filter((j) => j !== item);
-        }
-        return [item];
-      });
-      return;
+      return setTags((preTag) => (preTag.includes(item) ? tags.filter((j) => j !== item) : [item]));
     }
 
     let cloneTags = cloneDeep(currentTags);
+
     if (cloneTags.includes(item)) {
       remove(cloneTags, (x) => x === item);
     } else {
@@ -43,14 +40,12 @@ const Posts: NextPage = (): ReactElement => {
     setTags(cloneTags);
   };
 
-  useMount(() => {
-    if (list.length === 0) dispatch(getPostsListData());
-  });
+  useEffect(() => {
+    list.length === 0 && dispatch(getPostsListData());
+  }, []);
 
   useUpdateEffect(() => {
-    if (currentTags.length === 0) {
-      setTags(tags);
-    }
+    currentTags.length === 0 && setTags(tags);
   }, [tags]);
 
   return (

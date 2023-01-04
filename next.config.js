@@ -1,12 +1,7 @@
-/** @type {import('next').NextConfig} */
 const path = require('path');
 
-const withPWA = require('next-pwa')({
-   dest: 'public',
-   disable: process.env.NODE_ENV === 'production'
- });
-
-const nextConfig = withPWA({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {
@@ -24,6 +19,11 @@ const nextConfig = withPWA({
     ];
   },
   compress: true,
+};
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'production',
 });
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

@@ -8,7 +8,7 @@ import store from 'store';
 import Head from 'next/head';
 import { AnimatePresence } from 'framer-motion';
 import { useMount } from 'ahooks';
-import { useMixpanel } from 'mixpanel';
+import { useMixpanel } from 'hooks';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 

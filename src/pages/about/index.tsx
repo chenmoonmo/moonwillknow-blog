@@ -3,25 +3,25 @@ import { motion } from 'framer-motion';
 
 import styles from './index.module.scss';
 
-const About: NextPage = () => {
-  const findMe = [
-    {
-      name: 'Github',
-      icon: '🐙',
-      link: 'https://github.com/chenmoonmo',
-    },
-    {
-      name: 'Twitter',
-      icon: '🐦',
-      link: 'https://twitter.com/chenjustcam',
-    },
-    {
-      name: 'Email',
-      icon: '📧',
-      link: 'mailto:chenmoonmo@gamil.com',
-    },
-  ];
+const findMe = [
+  {
+    name: 'Github',
+    icon: '🐙',
+    link: 'https://github.com/chenmoonmo',
+  },
+  {
+    name: 'Twitter',
+    icon: '🐦',
+    link: 'https://twitter.com/chenjustcam',
+  },
+  {
+    name: 'Email',
+    icon: '📧',
+    link: 'mailto:chenmoonmo@gamil.com',
+  },
+];
 
+const About: NextPage = () => {
   return (
     <main className={styles.aboutContainer}>
       <article>
