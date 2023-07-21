@@ -57,11 +57,10 @@ export const Detail = ({
         >
           {cover && (
             <Image
-              className="object-cover object-center"
-              fill
               src={cover}
               alt=""
-              objectPosition="center center"
+              className="object-cover object-center"
+              fill
             />
           )}
         </motion.div>

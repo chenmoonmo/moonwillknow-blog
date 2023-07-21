@@ -46,7 +46,7 @@ export const getAllPages = (
 }> => {
   return new Promise((resolve, reject) => {
     getAllPagesInSpace(
-      "8980bf67b6434f8e8d5edb1347a2f7e7",
+      process.env.NOTION_SPACE_ID as string,
       undefined,
       (pageId: string) => {
         const notion = new NotionAPI();
@@ -59,7 +59,7 @@ export const getAllPages = (
           const title = getPageTitle(recordMap);
           const pageBlock =
             recordMap.block[Object.keys(recordMap.block)[0]]?.value;
-            
+
           const description = getPageProperty<string>(
             "summary",
             pageBlock,

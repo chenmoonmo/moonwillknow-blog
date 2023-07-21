@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Moon Will Know",
-    images: "",
+    images: "/",
   },
 };
 
@@ -19,6 +19,7 @@ export default async function PostDeatil({
 }: {
   params: { id: string };
 }) {
+  
   const notion = new NotionAPI();
   const recordMap = await notion.getPage(id);
 
@@ -48,8 +49,6 @@ export default async function PostDeatil({
     images: pageCoverUrl!,
     card: "summary_large_image",
   };
-
-  console.log(pageIcon)
 
   return (
     <Detail id={id} title={title} cover={pageCoverUrl} recordMap={recordMap} />

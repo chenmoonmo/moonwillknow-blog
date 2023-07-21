@@ -29,8 +29,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   manifest: "/manifest.json",
-  icons: "/icons/icon-128x128.png",
-  themeColor: "#fff",
+  icons: "/icons/icon-144x144.png",
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "rgb(30 41 59)",
+    },
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#fff",
+    },
+  ],
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {

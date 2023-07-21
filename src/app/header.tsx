@@ -59,12 +59,11 @@ export const Header = () => {
           ))}
         </ul>
         <span className="md:hidden">
-        <HamburgerIcon
-          className="w-8 h-10 ml-2 cursor-pointer"
-          onClick={handleMenuIconClick}
-        />
+          <HamburgerIcon
+            className="w-8 h-10 ml-2 cursor-pointer"
+            onClick={handleMenuIconClick}
+          />
         </span>
-       
         <Drawer
           isOpen={isOpen}
           placement="right"
