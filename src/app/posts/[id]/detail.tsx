@@ -9,30 +9,7 @@ import { motion } from "framer-motion";
 import { useColorMode } from "@chakra-ui/react";
 
 const Code = dynamic<any>(() =>
-  import("react-notion-x/build/third-party/code").then(async (m) => {
-    // Additional prismjs syntax
-    // await Promise.all([
-    //   import("prismjs/components/prism-bash"),
-    //   import("prismjs/components/prism-c"),
-    //   import("prismjs/components/prism-cpp"),
-    //   import("prismjs/components/prism-docker"),
-    //   import("prismjs/components/prism-js-templates"),
-    //   import("prismjs/components/prism-diff"),
-    //   import("prismjs/components/prism-git"),
-    //   import("prismjs/components/prism-go"),
-    //   import("prismjs/components/prism-graphql"),
-    //   import("prismjs/components/prism-makefile"),
-    //   import("prismjs/components/prism-markdown"),
-    //   import("prismjs/components/prism-python"),
-    //   import("prismjs/components/prism-rust"),
-    //   import("prismjs/components/prism-solidity"),
-    //   import("prismjs/components/prism-sql"),
-    //   import("prismjs/components/prism-swift"),
-    //   import("prismjs/components/prism-wasm"),
-    //   import("prismjs/components/prism-yaml"),
-    // ]);
-    return m.Code;
-  })
+  import("react-notion-x/build/third-party/code").then(async (m) => m.Code)
 );
 
 const Equation = dynamic<any>(() =>
@@ -80,10 +57,10 @@ export const Detail = ({
         >
           {cover && (
             <Image
-              className="object-cover"
+              className="object-cover object-center"
+              fill
               src={cover}
               alt=""
-              layout="fill"
               objectPosition="center center"
             />
           )}

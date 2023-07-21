@@ -63,7 +63,7 @@ export const PostCard: React.FC<PostCardProps> = ({
           className="relative h-40 w-full rounded-md overflow-hidden md:h-28"
           layoutId={`cover-${id}`}
         >
-          <Image className="object-cover" src={image} alt="" layout="fill" />
+          <Image className="object-cover object-center" fill src={image} alt="" />
         </motion.div>
       )}
       <motion.h1

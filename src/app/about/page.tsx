@@ -1,5 +1,3 @@
-import { NextPage } from "next";
-
 const findMe = [
   {
     name: "Github",
@@ -18,14 +16,10 @@ const findMe = [
   },
 ];
 
-const About: NextPage = () => {
+export default function About() {
   return (
     <main className="relative max-w-2xl px-10 py-5 container mx-auto text-base font-medium leading-6 md:py-20">
-      <article
-        className="
-      p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50
-      "
-      >
+      <article className="p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50">
         <p className="mt-2">
           您好，我是 Moon，你也可以叫我 “猛蚁” 或
           Simon。我是一名前端开发者，Javascript / Typescript 是我最喜欢的语言。
@@ -48,12 +42,7 @@ const About: NextPage = () => {
           {findMe.map((item) => (
             <a
               key={item.name}
-              className="min-h-[72px] relative text-6xl mx-3 select-none md:mx-10 transition-all 
-              hover:drop-shadow-lg
-              hover:after:visible 
-              hover:after:opacity-100
-      after:absolute  after:top-0  after:left-1/2  after:content-[attr(data-name)]   after:text-base  after:-translate-y-full  after:-translate-x-1/2  after:invisible  after:opacity-0  after:transition-opacity
-              "
+              className="min-h-[72px] relative text-6xl mx-3 select-none md:mx-10 transition-all hover:drop-shadow-lg hover:after:visible hover:after:opacity-100 after:absolute  after:top-0  after:left-1/2  after:content-[attr(data-name)]   after:text-base  after:-translate-y-full  after:-translate-x-1/2  after:invisible  after:opacity-0  after:transition-opacity "
               href={item.link}
               target="_blank"
               rel="noreferrer"
@@ -66,6 +55,4 @@ const About: NextPage = () => {
       </article>
     </main>
   );
-};
-
-export default About;
+}

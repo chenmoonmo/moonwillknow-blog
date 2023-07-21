@@ -1,5 +1,5 @@
 import { NotionAPI } from "notion-client";
-import { Detail } from "./_detail";
+import { Detail } from "./detail";
 import { getBlockIcon, getPageProperty, getPageTitle } from "notion-utils";
 import { defaultMapImageUrl } from "@/utils";
 import { Metadata } from "next";

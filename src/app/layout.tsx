@@ -10,26 +10,37 @@ import "katex/dist/katex.min.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
-import { Header } from "./_header";
+import { Header } from "./header";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Moon Will Know",
   description: "Moon will know",
+  applicationName: "MoonWillKnow",
+  appleWebApp: {
+    capable: true,
+    title: "MoonWillKnow",
+    statusBarStyle: "default",
+    startupImage: "/launch.png",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  manifest: "/manifest.json",
+  icons: "/icons/icon-128x128.png",
+  themeColor: "#fff",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
-          <Header></Header>
-          {children}
+          <Header />
+          {props.children}
+          <Footer />
         </Providers>
       </body>
     </html>

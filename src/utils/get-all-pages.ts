@@ -6,6 +6,7 @@ import {
 } from "notion-utils";
 import { defaultMapImageUrl } from "./map-image-url";
 import sortBy from "lodash/sortBy";
+import filter from "lodash/filter";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
@@ -25,11 +26,21 @@ const posts: {
 
 const allTags = new Set<string>();
 
-const getPostList = () => {
-  return sortBy(Object.values(posts), (item) => -item.date);
+const getPostList = (tags?: string[]) => {
+  const list = sortBy(Object.values(posts), (item) => -item.date);
+  if (tags) {
+    return filter(list, (item) => {
+      return tags.some((tag) => item.tags.includes(tag));
+    });
+  }
+  return list;
 };
 
-export const getAllPages = (): Promise<{
+const getTags = () => sortBy(Array.from(allTags));
+
+export const getAllPages = (
+  tags?: string[]
+): Promise<{
   posts: PostInfoType[];
   tags: string[];
 }> => {
@@ -48,6 +59,7 @@ export const getAllPages = (): Promise<{
           const title = getPageTitle(recordMap);
           const pageBlock =
             recordMap.block[Object.keys(recordMap.block)[0]]?.value;
+            
           const description = getPageProperty<string>(
             "summary",
             pageBlock,
@@ -80,8 +92,8 @@ export const getAllPages = (): Promise<{
           }
         });
         resolve({
-          posts: getPostList(),
-          tags: Array.from(allTags),
+          posts: getPostList(tags),
+          tags: getTags(),
         });
       })
       .catch((err) => {
@@ -89,8 +101,8 @@ export const getAllPages = (): Promise<{
       });
     if (Object.keys(posts).length > 0) {
       resolve({
-        posts: getPostList(),
-        tags: Array.from(allTags),
+        posts: getPostList(tags),
+        tags: getTags(),
       });
     }
   });
