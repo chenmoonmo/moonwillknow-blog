@@ -6,6 +6,7 @@ const withPWA = require("next-pwa")({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
+    MIX_PANEL_TOKEN: process.env.NEXT_PUBLIC_MIX_PANEL_TOKEN,
     NOTION_TOKEN: process.env.NEXT_PUBLIC_NOTION_TOKEN,
     NOTION_SPACE_ID: "7943a9acb48b4fd6ae1784a4d1957e14",
   },
