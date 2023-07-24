@@ -1,3 +1,5 @@
+import { Me } from "@/components/me";
+
 const findMe = [
   {
     name: "Github",
@@ -19,7 +21,8 @@ const findMe = [
 export default function About() {
   return (
     <main className="relative max-w-2xl px-10 py-5 container mx-auto text-base font-medium leading-6 md:py-20">
-      <article className="p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50">
+      <article className="flex flex-col items-center p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50">
+        <Me width={100} height={undefined} />
         <p className="mt-2">
           您好，我是 Moon，你也可以叫我 “猛蚁” 或
           Simon。我是一名前端开发者，Javascript / Typescript 是我最喜欢的语言。
