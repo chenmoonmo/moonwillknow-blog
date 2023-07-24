@@ -7,11 +7,8 @@ import {
 } from "notion-utils";
 import { defaultMapImageUrl } from "./map-image-url";
 import sortBy from "lodash/sortBy";
-import filter from "lodash/filter";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
-
-let count = 0;
 
 type PostInfoType = {
   id: string;
@@ -41,7 +38,6 @@ export const getAllPages = cache(
     posts: PostInfoType[];
     tags: string[];
   }> => {
-    count++;
     return new Promise((resolve, reject) => {
       getAllPagesInSpace(
         process.env.NOTION_SPACE_ID as string,

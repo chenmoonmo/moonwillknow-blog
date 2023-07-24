@@ -36,10 +36,9 @@ export const MainPosts: React.FC<PostsProps> = ({ posts, tags }) => {
             width="200"
             viewBox="0 0 522 270"
             fill="none"
-            stroke="#ffffff"
             stroke-width="10"
             xmlns="http://www.w3.org/2000/svg"
-            className="mt-3"
+            className="mt-3 stroke-current dark:stroke-white"
           >
             <path
               d="M21.0096 31.2135C30.1403 31.2135 38.5859 44.9824 45.0861 50.6347C48.1354 53.2863 51.7215 58.3531 55.0513 60.018"

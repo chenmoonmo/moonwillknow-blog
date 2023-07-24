@@ -12,11 +12,16 @@ const findMe = [
     link: "https://twitter.com/chenjustcam",
   },
   {
+    name: "Telegram",
+    icon: "✈️",
+    link: "https://t.me/moonmomoo",
+  },
+  {
     name: "Email",
     icon: "📧",
     link: "mailto:chenmoonmo@gamil.com",
   },
-];
+] as const;
 
 export default function About() {
   return (
