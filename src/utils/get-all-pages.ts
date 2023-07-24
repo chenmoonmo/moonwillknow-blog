@@ -1,6 +1,8 @@
 import { NotionAPI } from "notion-client";
 import { getAllPagesInSpace } from "notion-utils";
 import sortBy from "lodash/sortBy";
+import filter from "lodash/filter";
+
 import { getPageInfoFromRecordMap } from "./get-page";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
@@ -24,11 +26,14 @@ const posts: {
 const allTags = new Set<string>();
 
 const getPostList = () => {
-  const list = sortBy(Object.values(posts), (item) => -item.date);
+  const list = sortBy(
+    filter(Object.values(posts), (item) => item.status === "Published"),
+    (item) => -item.date
+  );
   return list;
 };
 
-const getTags = () => sortBy(Array.from(allTags));
+const getTags = () => sortBy(filter(Array.from(allTags), (item) => item));
 
 export const getAllPages = (): Promise<{
   posts: PostInfoType[];
@@ -47,14 +52,12 @@ export const getAllPages = (): Promise<{
         Object.keys(pages).map((id) => {
           const recordMap = pages[id]!;
           const pageDeatail = getPageInfoFromRecordMap(recordMap);
-          const { status, tags } = pageDeatail;
-          if (status === "Published") {
-            tags?.forEach((tag) => allTags.add(tag));
-            posts[id] = {
-              id,
-              ...pageDeatail,
-            };
-          }
+          const { tags } = pageDeatail;
+          tags?.forEach((tag) => allTags.add(tag));
+          posts[id] = {
+            id,
+            ...pageDeatail,
+          };
         });
         resolve({
           posts: getPostList(),
