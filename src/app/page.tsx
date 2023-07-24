@@ -20,6 +20,7 @@ export default async function Home() {
               image={post.cover}
               date={post.date}
               tags={post.tags}
+              icon={post.icon}
             />
           );
         })}

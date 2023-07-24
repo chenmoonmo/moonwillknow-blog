@@ -107,6 +107,7 @@ export const MainPosts: React.FC<PostsProps> = ({ posts, tags }) => {
               image={post.cover}
               date={post.date}
               tags={post.tags}
+              icon={post.icon}
             />
           );
         })}

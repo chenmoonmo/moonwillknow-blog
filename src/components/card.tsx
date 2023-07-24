@@ -16,6 +16,7 @@ type PostCardProps = {
   image: string | undefined | null;
   date: number;
   tags: string[];
+  icon: string;
 };
 
 const transition = {
@@ -47,6 +48,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   image,
   date,
   tags,
+  icon,
 }) => {
   return (
     <MotionLink
@@ -75,7 +77,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         className="pt-2 text-xl font-bold dark:text-gray-300 text-slate-800"
         layoutId={`title-${id}`}
       >
-        {title}
+        {icon} {title}
       </motion.h1>
       <motion.div
         layoutId={`date-${id}`}

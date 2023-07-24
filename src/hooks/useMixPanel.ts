@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export const useMixpanel = () => {
-  
   mixpanel.init(process.env.MIX_PANEL_TOKEN as string, {
     debug: process.env.NODE_ENV === "development",
   });
@@ -19,7 +18,7 @@ export const useMixpanel = () => {
 
   const read = useCallback((pageId: string, pageTitle: string) => {
     let uuid = localStorage.getItem("uuid");
-    mixpanel.track("read", { uuid, pageId, pageTitle });
+    mixpanel.track("read", { uuid, pageId, pageTitle: document.title });
   }, []);
 
   return {
