@@ -67,6 +67,7 @@ export const getAllPages = (): Promise<{
       .catch((err) => {
         reject(err);
       });
+
     if (Object.keys(posts).length > 0) {
       resolve({
         posts: getPostList(),
