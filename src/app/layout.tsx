@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   themeColor: [
     {
       media: "(prefers-color-scheme: dark)",
-      color: "rgb(30 41 59)",
+      color: "rgb(30,41,59)",
     },
     {
       media: "(prefers-color-scheme: light)",

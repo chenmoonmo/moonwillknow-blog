@@ -17,7 +17,11 @@ export default async function PostDeatil({
 }: {
   params: { id: string };
 }) {
-  const { recordMap, description, title, cover } = await getPage(id);
+  const { recordMap, description, title, cover, status } = await getPage(id);
+
+  if (status !== "Published") {
+    throw new Error("404");
+  }
 
   metadata.title = title;
   metadata.openGraph = {

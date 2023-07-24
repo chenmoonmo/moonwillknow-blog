@@ -33,7 +33,8 @@ const getPostList = () => {
   return list;
 };
 
-const getTags = () => sortBy(filter(Array.from(allTags), (item) => !!item)) ?? [];
+const getTags = () =>
+  sortBy(filter(Array.from(allTags), (item) => !!item)) ?? [];
 
 export const getAllPages = (): Promise<{
   posts: PostInfoType[];
