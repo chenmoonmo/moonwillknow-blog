@@ -1,16 +1,28 @@
-import HomePosts from "./home-posts";
 import Banner from "./banner";
-import { Suspense } from "react";
-import PostsLoading from "./posts-loading";
+import { PostCard } from "@/components/card";
+import { getAllPages } from "@/utils";
 
-export default function Home() {
+export default async function Home() {
+  let { posts } = await getAllPages();
+  posts = posts.slice(0, 6);
+
   return (
     <main>
       <Banner />
       <div className="max-w-7xl mx-auto mt-10 px-5 grid grid-flow-row grid-cols-1 gap-5 md:grid-cols-3">
-        <Suspense fallback={<PostsLoading />}>
-          <HomePosts />
-        </Suspense>
+        {posts.map((post) => {
+          return (
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              description={post.description}
+              image={post.pageCoverUrl}
+              date={post.date}
+              tags={post.tags}
+            />
+          );
+        })}
       </div>
     </main>
   );

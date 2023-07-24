@@ -1,17 +1,19 @@
 "use client";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { Tag, TagLabel, Tooltip } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import React, { MouseEvent } from "react";
 
 type TagsProps = {
   tags: string[];
   currentTags?: string[];
+  onTagsChange?: (tags: string[]) => void;
 };
 
-export const Tags: React.FC<TagsProps> = ({ tags, currentTags = [] }) => {
-  const router = useRouter();
-
+export const Tags: React.FC<TagsProps> = ({
+  tags,
+  currentTags = [],
+  onTagsChange,
+}) => {
   const handlerFilter = (e: MouseEvent<HTMLSpanElement>, tag: string) => {
     e.preventDefault();
 
@@ -27,13 +29,7 @@ export const Tags: React.FC<TagsProps> = ({ tags, currentTags = [] }) => {
         : [...currentTags, tag];
     }
 
-    const searchParams = new URLSearchParams();
-
-    newTags.forEach((tag) => {
-      searchParams.append("tags", tag);
-    });
-
-    router.push(`/posts?${searchParams.toString()}`);
+    onTagsChange?.(newTags);
   };
 
   return (
@@ -50,7 +46,7 @@ export const Tags: React.FC<TagsProps> = ({ tags, currentTags = [] }) => {
         </Tag>
       ))}
       {tags.length > 0 && (
-        <Tooltip label="⌘ + Click To Unicode" placement="top">
+        <Tooltip label="⌘ + Click To Filter Only" placement="top">
           <QuestionOutlineIcon cursor="pointer" />
         </Tooltip>
       )}
