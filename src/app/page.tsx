@@ -1,15 +1,11 @@
 import Banner from "./banner";
-import { getAllPages } from "@/utils";
 import { Suspense } from "react";
 import { HomePosts } from "./home-posts";
 import { HomePostsLoading } from "./home-posts-loading";
 
 export const revalidate = 0;
 
-export default async function Home() {
-  let { posts } = await getAllPages();
-  posts = posts.slice(0, 6);
-
+export default function Home() {
   return (
     <main>
       <Banner />
