@@ -104,7 +104,7 @@ export const MainPosts: React.FC<PostsProps> = ({ posts, tags }) => {
               id={post.id}
               title={post.title}
               description={post.description}
-              image={post.pageCoverUrl}
+              image={post.cover}
               date={post.date}
               tags={post.tags}
             />

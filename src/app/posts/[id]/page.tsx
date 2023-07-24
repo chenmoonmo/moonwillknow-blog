@@ -1,8 +1,6 @@
-import { NotionAPI } from "notion-client";
 import { Detail } from "./detail";
-import { getBlockIcon, getPageProperty, getPageTitle } from "notion-utils";
-import { defaultMapImageUrl } from "@/utils";
 import { Metadata } from "next";
+import { getPage } from "@/utils/get-page";
 
 export const metadata: Metadata = {
   title: "Moon Will Know",
@@ -19,38 +17,19 @@ export default async function PostDeatil({
 }: {
   params: { id: string };
 }) {
-  
-  const notion = new NotionAPI();
-  const recordMap = await notion.getPage(id);
-
-  const title = getPageTitle(recordMap);
-  const pageBlock = recordMap.block[Object.keys(recordMap.block)[0]]?.value;
-  const pageIcon = getBlockIcon(pageBlock, recordMap);
-  const description = getPageProperty(
-    "summary",
-    pageBlock,
-    recordMap
-  ) as string;
-
-  const pageCoverUrl = defaultMapImageUrl(
-    pageBlock.format.page_cover,
-    pageBlock
-  );
+  const { recordMap, description, title, cover } = await getPage(id);
 
   metadata.title = title;
-  metadata.icons = pageIcon;
   metadata.openGraph = {
     title,
-    images: pageCoverUrl!,
+    images: cover!,
   };
   metadata.twitter = {
     title,
     description,
-    images: pageCoverUrl!,
+    images: cover!,
     card: "summary_large_image",
   };
 
-  return (
-    <Detail id={id} title={title} cover={pageCoverUrl} recordMap={recordMap} />
-  );
+  return <Detail id={id} title={title} cover={cover} recordMap={recordMap} />;
 }

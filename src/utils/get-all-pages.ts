@@ -1,12 +1,8 @@
 import { cache } from "react";
 import { NotionAPI } from "notion-client";
-import {
-  getAllPagesInSpace,
-  getPageProperty,
-  getPageTitle,
-} from "notion-utils";
-import { defaultMapImageUrl } from "./map-image-url";
+import { getAllPagesInSpace } from "notion-utils";
 import sortBy from "lodash/sortBy";
+import { getPageInfoFromRecordMap } from "./get-page";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
@@ -15,9 +11,11 @@ type PostInfoType = {
   date: number;
   title: string;
   description: string;
-  pageCoverUrl: string | null;
+  cover: string | null;
   status: StatusType;
   tags: string[];
+  recordMap: any;
+  icon: string;
 };
 
 const posts: {
@@ -50,42 +48,13 @@ export const getAllPages = cache(
         .then((pages) => {
           Object.keys(pages).map((id) => {
             const recordMap = pages[id]!;
-            const title = getPageTitle(recordMap);
-            const pageBlock =
-              recordMap.block[Object.keys(recordMap.block)[0]]?.value;
-
-            const description = getPageProperty<string>(
-              "summary",
-              pageBlock,
-              recordMap
-            );
-
-            const date = getPageProperty<number>("date", pageBlock, recordMap);
-            const tags = getPageProperty<string[]>(
-              "tags",
-              pageBlock,
-              recordMap
-            );
-            const status = getPageProperty<StatusType>(
-              "status",
-              pageBlock,
-              recordMap
-            );
-
-            const pageCoverUrl = pageBlock.format?.page_cover
-              ? defaultMapImageUrl(pageBlock.format.page_cover, pageBlock)
-              : "";
-
+            const pageDeatail = getPageInfoFromRecordMap(recordMap);
+            const { status, tags } = pageDeatail;
             if (status === "Published") {
               tags?.forEach((tag) => allTags.add(tag));
               posts[id] = {
                 id,
-                date,
-                title,
-                description,
-                pageCoverUrl,
-                status,
-                tags,
+                ...pageDeatail,
               };
             }
           });
