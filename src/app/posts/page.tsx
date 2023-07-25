@@ -1,10 +1,13 @@
-import { getAllPages } from "@/utils";
-import { MainPosts } from "./posts";
+import { Suspense } from "react";
+import { QueryPosts } from "./query-posts";
+import Loading from "./post-loading";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function Posts() {
-  const { posts, tags } = await getAllPages();
-
-  return <MainPosts posts={posts} tags={tags} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <QueryPosts />
+    </Suspense>
+  );
 }

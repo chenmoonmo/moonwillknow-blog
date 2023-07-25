@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { HomePosts } from "./home-posts";
 import { HomePostsLoading } from "./home-posts-loading";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default function Home() {
   return (

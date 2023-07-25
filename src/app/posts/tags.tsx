@@ -33,7 +33,7 @@ export const Tags: React.FC<TagsProps> = ({
   };
 
   return (
-    <div className="mt-10 flex flex-wrap gap-4 items-center">
+    <div className="flex flex-wrap gap-4 items-center">
       {tags?.map((tag) => (
         <Tag
           className="cursor-pointer select-none"

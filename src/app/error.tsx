@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Error() {
   return (
-    <div className="flex flex-col items-center justify-center mt-40">
+    <main className="min-h-[calc(100vh-128px)] flex flex-col items-center pt-40">
       <Me className="w-[100px] h-[127px]" />
       <div className="flex items-center mt-3">
         <svg
@@ -78,6 +78,6 @@ export default function Error() {
           <IconButton icon={<ArrowBackIcon />} aria-label="back" size="lg" />
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

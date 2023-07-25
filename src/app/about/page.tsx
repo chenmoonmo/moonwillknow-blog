@@ -12,11 +12,6 @@ const findMe = [
     link: "https://twitter.com/chenjustcam",
   },
   {
-    name: "Telegram",
-    icon: "✈️",
-    link: "https://t.me/moonmomoo",
-  },
-  {
     name: "Email",
     icon: "📧",
     link: "mailto:chenmoonmo@gamil.com",
@@ -25,7 +20,7 @@ const findMe = [
 
 export default function About() {
   return (
-    <main className="relative max-w-2xl px-10 py-5 container mx-auto text-base font-medium leading-6 md:py-20">
+    <main className="relative min-h-[calc(100vh-128px)] max-w-2xl px-5 py-5 container mx-auto text-base font-medium leading-6 md:py-20">
       <article className="flex flex-col items-center p-5 bg-green-600 rounded-md shadow-md shadow-green-800 text-gray-50">
         <Me width={100} height={undefined} />
         <p className="mt-2">
