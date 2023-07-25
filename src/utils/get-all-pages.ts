@@ -50,7 +50,6 @@ export const getAllPages = cache(
               ...pageDeatail,
             };
           });
-
           resolve({
             posts: sortBy(
               filter(
