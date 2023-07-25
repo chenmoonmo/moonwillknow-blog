@@ -4,7 +4,7 @@ import Loading from "./post-loading";
 
 export const revalidate = 60;
 
-export default async function Posts() {
+export default function Posts() {
   return (
     <Suspense fallback={<Loading />}>
       <QueryPosts />
