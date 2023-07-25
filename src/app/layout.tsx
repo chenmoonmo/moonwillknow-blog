@@ -19,6 +19,21 @@ export const metadata: Metadata = {
   title: "Moon Will Know",
   description: "Moon will know",
   applicationName: "MoonWillKnow",
+  twitter: {
+    title: "Moon Will Know",
+    description: "Moon will know",
+    card: "summary",
+    site: "@chenjustcam",
+    creator: "@chenjustcam",
+    images: "/cat.JPG",
+  },
+  openGraph: {
+    title: "Moon Will Know",
+    description: "Moon will know",
+    url: "https://moonwillknow.com",
+    type: "website",
+    images: "/cat.JPG",
+  },
   appleWebApp: {
     capable: true,
     title: "MoonWillKnow",

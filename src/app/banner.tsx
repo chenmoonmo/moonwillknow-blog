@@ -11,9 +11,10 @@ export default function Banner() {
       <div className="relative h-[400px] w-full">
         <Image
           className="object-cover object-center"
-          fill
           src="/cat.JPG"
-          alt=""
+          alt="This is my cat, Wowo!"
+          fill
+          priority
         />
         <motion.div
           className="relative z-10 text-8xl font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white"

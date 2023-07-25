@@ -67,8 +67,9 @@ export const PostCard: React.FC<PostCardProps> = ({
         >
           <Image
             className="object-cover object-center"
-            fill
             src={image}
+            sizes="(min-width: 768px) 33vw, 100vw "
+            fill
             alt=""
           />
         </motion.div>

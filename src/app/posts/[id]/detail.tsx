@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { useColorMode } from "@chakra-ui/react";
 
 const Code = dynamic<any>(() =>
-  import("react-notion-x/build/third-party/code").then(async (m) => m.Code)
+  import("react-notion-x/build/third-party/code").then((m) => m.Code)
 );
 
 const Equation = dynamic<any>(() =>
@@ -58,8 +58,9 @@ export const Detail = ({
           {cover && (
             <Image
               src={cover}
-              alt=""
               className="object-cover object-center"
+              alt=""
+              sizes="100vw"
               fill
             />
           )}
