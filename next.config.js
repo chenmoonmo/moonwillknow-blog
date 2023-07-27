@@ -22,6 +22,26 @@ const nextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  headers: [
+    {
+      source: "/",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "s-maxage=60, stale-while-revalidate",
+        },
+      ],
+    },
+    {
+      source: "/posts",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "s-maxage=60, stale-while-revalidate",
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = withPWA(nextConfig);
