@@ -38,7 +38,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky bg-white bg-opacity-90 backdrop-blur shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50 md:px-10 w-screen dark:bg-slate-800">
+    <header className="sticky bg-white bg-opacity-90 backdrop-blur shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50 md:px-10 dark:bg-slate-800">
       <div className="cursor-pointer flex flex-row items-center font-bold text-xl md:text-3xl">
         <span className="mr-2 select-none" onClick={handleToggleMode}>
           {colorMode === "dark" ? "🌕" : "🌞"}

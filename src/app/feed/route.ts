@@ -1,8 +1,6 @@
-import { NextResponse } from "next/server";
 import { NotionAPI } from "notion-client";
-import { getBlockIcon, getPageProperty } from "notion-utils";
+import { getPageProperty } from "notion-utils";
 import { defaultMapImageUrl } from "@/utils/map-image-url";
-import { filter, sortBy } from "lodash";
 import RSS from "rss";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
