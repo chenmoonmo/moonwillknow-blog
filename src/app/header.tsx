@@ -6,10 +6,11 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
+  Portal,
   useColorMode,
 } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 const NavItems = [
@@ -92,5 +93,23 @@ export const Header = () => {
         </Drawer>
       </div>
     </header>
+  );
+};
+
+export const ThemeColor = () => {
+  let headRef = useRef<any>();
+  const { colorMode } = useColorMode();
+
+  useLayoutEffect(() => {
+    headRef.current = document.querySelector("head")!;
+  }, []);
+
+  return (
+    <Portal containerRef={headRef}>
+      <meta
+        name="theme-color"
+        content={colorMode === "dark" ? "rgb(30,41,59)" : "rgb(255,255,255)"}
+      />
+    </Portal>
   );
 };

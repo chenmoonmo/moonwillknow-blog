@@ -10,7 +10,7 @@ import "katex/dist/katex.min.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
-import { Header } from "./header";
+import { Header, ThemeColor } from "./header";
 import { Footer } from "@/components/footer";
 import { Feed } from "@/components/feed";
 
@@ -46,16 +46,6 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: "/icons/icon-144x144.png",
-  themeColor: [
-    {
-      media: "(prefers-color-scheme: dark)",
-      color: "rgb(30,41,59)",
-    },
-    {
-      media: "(prefers-color-scheme: light)",
-      color: "#fff",
-    },
-  ],
 };
 
 export default function RootLayout({
@@ -67,9 +57,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
+          <ThemeColor />
           <Header />
           {children}
-          <Feed/>
+          <Feed />
           <Footer />
         </Providers>
       </body>
