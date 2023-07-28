@@ -10,7 +10,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 const NavItems = [
@@ -21,7 +21,7 @@ const NavItems = [
 
 export const Header = () => {
   const pathName = usePathname();
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode, setColorMode } = useColorMode();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,6 +37,15 @@ export const Header = () => {
     toggleColorMode();
     localStorage.theme = localStorage.theme === "dark" ? "light" : "dark";
   };
+
+  useEffect(() => {
+    if (localStorage.theme) {
+      setColorMode(localStorage.theme);
+    } else {
+      setColorMode("dark");
+      localStorage.theme = "dark";
+    }
+  }, [setColorMode]);
 
   return (
     <header className="sticky bg-white bg-opacity-90 backdrop-blur shadow-sm top-0 h-16 px-5 flex flex-row items-center justify-between z-50 md:px-10 dark:bg-slate-800">

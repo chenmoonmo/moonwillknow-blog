@@ -8,6 +8,13 @@ import { ExtendedRecordMap } from "notion-types";
 import { motion } from "framer-motion";
 import { useColorMode } from "@chakra-ui/react";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react";
+
 const Code = dynamic<any>(() =>
   import("react-notion-x/build/third-party/code").then((m) => m.Code)
 );
@@ -44,37 +51,52 @@ export const Detail = ({
   const { colorMode } = useColorMode();
 
   return (
-    <NotionRenderer
-      recordMap={recordMap}
-      darkMode={colorMode === "dark"}
-      fullPage
-      disableHeader
-      pageTitle={<motion.div layoutId={`title-${id}`}>{title}</motion.div>}
-      pageCover={
-        <motion.div
-          className="relative h-40 w-full  rounded-md overflow-hidden"
-          layoutId={`cover-${id}`}
-        >
-          {cover && (
-            <Image
-              src={cover}
-              className="object-cover object-center"
-              alt=""
-              sizes="100vw"
-              fill
-            />
-          )}
-        </motion.div>
-      }
-      components={{
-        nextImage: Image,
-        nextLink: Link,
-        Collection: () => <></>,
-        Code,
-        Equation,
-        Modal,
-        Pdf,
-      }}
-    />
+    <>
+      <Breadcrumb className="pb-2">
+        <BreadcrumbItem>
+          <BreadcrumbLink>
+            <Link href="/posts">Posts</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink>
+            {title.slice(0, 5)}
+            {title.length > 5 ? "..." : null}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+      <NotionRenderer
+        recordMap={recordMap}
+        darkMode={colorMode === "dark"}
+        fullPage
+        disableHeader
+        pageTitle={<motion.div layoutId={`title-${id}`}>{title}</motion.div>}
+        pageCover={
+          <motion.div
+            className="relative h-40 w-full  rounded-md overflow-hidden"
+            layoutId={`cover-${id}`}
+          >
+            {cover && (
+              <Image
+                src={cover}
+                className="object-cover object-center"
+                alt=""
+                sizes="100vw"
+                fill
+              />
+            )}
+          </motion.div>
+        }
+        components={{
+          nextImage: Image,
+          nextLink: Link,
+          Collection: () => <></>,
+          Code,
+          Equation,
+          Modal,
+          Pdf,
+        }}
+      />
+    </>
   );
 };
