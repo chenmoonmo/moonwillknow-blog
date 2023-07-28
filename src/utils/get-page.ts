@@ -7,6 +7,7 @@ import { ExtendedRecordMap } from "notion-types";
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
 export const getPageInfoFromRecordMap = (recordMap: ExtendedRecordMap) => {
+
   const pageBlock = recordMap.block[Object.keys(recordMap.block)[0]]?.value;
 
   const title = getPageTitle(recordMap);
@@ -16,6 +17,7 @@ export const getPageInfoFromRecordMap = (recordMap: ExtendedRecordMap) => {
     pageBlock,
     recordMap
   ) as string;
+  
   const date = getPageProperty<number>("date", pageBlock, recordMap);
   const tags = getPageProperty<string[]>("tags", pageBlock, recordMap);
   const status = getPageProperty<StatusType>("status", pageBlock, recordMap);
