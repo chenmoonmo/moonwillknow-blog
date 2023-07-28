@@ -12,7 +12,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const { visit, read } = useMixpanel();
 
   useEffect(() => {
-    if (pathName === "/posts" && routerParams.id) {
+    if (pathName.startsWith("/posts") && routerParams.id) {
       read(routerParams.id as string, document.title);
     } else {
       visit();
