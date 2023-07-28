@@ -5,7 +5,7 @@ import Image from "next/image";
 export const Feed = () => {
   const toast = useToast();
   const copyFeed = () => {
-    navigator.clipboard.writeText("https://moonwillknow.com/feed");
+    navigator.clipboard.writeText("https://moonwillknow.dev/feed");
     toast({
       title: "Copied to clipboard",
       position: "bottom-right",

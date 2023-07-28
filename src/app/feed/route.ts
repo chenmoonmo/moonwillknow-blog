@@ -14,7 +14,7 @@ export async function GET(res: Request) {
   const feed = new RSS({
     title: "Moon will know",
     site_url: "moonwillknow.dev",
-    feed_url: `moonwillknow.dev/feed`,
+    feed_url: "moonwillknow.dev/feed",
     language: "zh-cn",
     ttl: 60,
   });
