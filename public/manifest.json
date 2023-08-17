@@ -3,7 +3,7 @@
   "short_name": "moon",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
-  "display": "standalone",
+  "display": "minimal-ui",
   "scope": "./",
   "start_url": "/",
   "prefer_related_applications": false,
