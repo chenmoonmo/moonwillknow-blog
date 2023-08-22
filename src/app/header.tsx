@@ -16,6 +16,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 const NavItems = [
   { name: "Home", path: "/" },
   { name: "Posts", path: "/posts" },
+  {
+    name: "Clippings",
+    path: "https://moonlight.zeabur.app/",
+  },
   { name: "About", path: "/about" },
 ] as const;
 
@@ -60,7 +64,7 @@ export const Header = () => {
           {NavItems.map((item) => (
             <li
               key={item.name}
-              className={`font-bold text-xl  cursor-pointer select-none hover:text-green-600 ${
+              className={`font-bold text-lg cursor-pointer select-none hover:text-green-600 ${
                 item.path === pathName ? "text-green-600" : ""
               }`}
             >
