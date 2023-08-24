@@ -18,7 +18,7 @@ const NavItems = [
   { name: "Posts", path: "/posts" },
   {
     name: "Clippings",
-    path: "https://moonlight.zeabur.app/",
+    path: "https://light.moonwillknow.dev/",
   },
   { name: "About", path: "/about" },
 ] as const;
