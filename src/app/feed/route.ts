@@ -1,6 +1,7 @@
 import { NotionAPI } from "notion-client";
 import { getPageProperty } from "notion-utils";
 import { defaultMapImageUrl } from "@/utils/map-image-url";
+import { unwrapBlock } from "@/utils/unwrap-block";
 import RSS from "rss";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
@@ -20,7 +21,8 @@ export async function GET(res: Request) {
   });
 
   Object.keys(block).forEach((id) => {
-    const pageBlock = block[id].value;
+    const pageBlock = unwrapBlock(block[id]?.value);
+    if (!pageBlock) return;
     const title = getPageProperty<string>("title", pageBlock, recordMap);
     const date = getPageProperty<number>("date", pageBlock, recordMap);
     const status = getPageProperty<StatusType>("status", pageBlock, recordMap);

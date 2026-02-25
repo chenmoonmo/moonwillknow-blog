@@ -5,6 +5,7 @@ import filter from "lodash/filter";
 
 import { cache } from "react";
 import { defaultMapImageUrl } from "./";
+import { unwrapBlock } from "./unwrap-block";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
@@ -33,7 +34,8 @@ export const getAllPages = cache(
     const allTags = new Set<string>();
 
     Object.keys(block).forEach((id) => {
-      const pageBlock = (block[id].value as any).value;
+      const pageBlock = unwrapBlock(block[id]?.value);
+      if (!pageBlock) return;
       const title = getPageProperty<string>("title", pageBlock, recordMap);
       const date = getPageProperty<number>("date", pageBlock, recordMap);
       const tags = getPageProperty<string[]>("tags", pageBlock, recordMap);

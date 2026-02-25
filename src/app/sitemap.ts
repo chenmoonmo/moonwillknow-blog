@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { NotionAPI } from "notion-client";
 import { getPageProperty } from "notion-utils";
+import { unwrapBlock } from "@/utils/unwrap-block";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
@@ -13,7 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pagesId: string[] = [];
 
   Object.keys(block).forEach((id) => {
-    const pageBlock = block[id].value;
+    const pageBlock = unwrapBlock(block[id]?.value);
+    if (!pageBlock) return;
     const status = getPageProperty<StatusType>("status", pageBlock, recordMap);
 
     if (status === "Published") {

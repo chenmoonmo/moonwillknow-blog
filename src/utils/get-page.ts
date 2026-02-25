@@ -3,12 +3,16 @@ import { cache } from "react";
 import { getBlockIcon, getPageProperty, getPageTitle } from "notion-utils";
 import { defaultMapImageUrl } from "./map-image-url";
 import { ExtendedRecordMap } from "notion-types";
+import { unwrapBlock } from "./unwrap-block";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
 export const getPageInfoFromRecordMap = (recordMap: ExtendedRecordMap) => {
 
-  const pageBlock = recordMap.block[Object.keys(recordMap.block)[0]]?.value;
+  const pageBlock = unwrapBlock(recordMap.block[Object.keys(recordMap.block)[0]]?.value);
+  if (!pageBlock) {
+    throw new Error("Page block not found in recordMap");
+  }
 
   const title = getPageTitle(recordMap);
   const icon = getBlockIcon(pageBlock, recordMap);
