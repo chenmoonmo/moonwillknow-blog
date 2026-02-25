@@ -12,6 +12,9 @@ export async function generateMetadata({
   params: { id },
 }: PageProps): Promise<Metadata> {
   const { description, title, cover, status } = await getPage(id);
+  const safeTitle = title ?? "Moon Will Know";
+  const safeDescription = description ?? "Moon will know";
+  const safeCover = cover ?? undefined;
 
   if (status !== "Published") {
     return {
@@ -43,16 +46,16 @@ export async function generateMetadata({
   }
 
   return {
-    title,
-    description,
+    title: safeTitle,
+    description: safeDescription,
     openGraph: {
-      title,
-      images: cover!,
+      title: safeTitle,
+      images: safeCover,
     },
     twitter: {
-      title,
-      description,
-      images: cover!,
+      title: safeTitle,
+      description: safeDescription,
+      images: safeCover,
       card: "summary_large_image",
     },
   };
@@ -60,10 +63,11 @@ export async function generateMetadata({
 
 export default async function PostDeatil({ params: { id } }: PageProps) {
   const { recordMap, title, cover, status } = await getPage(id);
+  const safeTitle = title ?? "Untitled";
 
   if (status !== "Published") {
     throw new Error("404");
   }
 
-  return <Detail id={id} title={title} cover={cover} recordMap={recordMap} />;
+  return <Detail id={id} title={safeTitle} cover={cover} recordMap={recordMap} />;
 }
