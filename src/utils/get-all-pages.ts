@@ -33,7 +33,7 @@ export const getAllPages = cache(
     const allTags = new Set<string>();
 
     Object.keys(block).forEach((id) => {
-      const pageBlock = block[id].value;
+      const pageBlock = (block[id].value as any).value;
       const title = getPageProperty<string>("title", pageBlock, recordMap);
       const date = getPageProperty<number>("date", pageBlock, recordMap);
       const tags = getPageProperty<string[]>("tags", pageBlock, recordMap);
@@ -42,7 +42,7 @@ export const getAllPages = cache(
         pageBlock,
         recordMap
       );
-      const icon = getBlockIcon(pageBlock, recordMap);
+      const icon = getBlockIcon(pageBlock, recordMap) as string;
       const description = getPageProperty(
         "summary",
         pageBlock,
