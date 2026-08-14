@@ -1,12 +1,12 @@
 import { MetadataRoute } from "next";
-import { NotionAPI } from "notion-client";
 import { getPageProperty } from "notion-utils";
+import { notion } from "@/utils/notion";
 import { unwrapBlock } from "@/utils/unwrap-block";
+import { SITE_URL } from "@/utils/site";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const notion = new NotionAPI();
   const recordMap = await notion.getPage("7943a9acb48b4fd6ae1784a4d1957e14");
 
   const { block } = recordMap;
@@ -25,20 +25,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: "https://moonwillknow.dev",
+      url: SITE_URL,
       lastModified: new Date(),
     },
     {
-      url: "https://moonwillknow.dev/posts",
+      url: `${SITE_URL}/posts`,
       lastModified: new Date(),
     },
     {
-      url: "https://moonwillknow.dev/about",
+      url: `${SITE_URL}/about`,
       lastModified: new Date(),
     },
   ].concat(
     pagesId.map((id) => ({
-      url: `https://moonwillknow.dev/posts/${id}`,
+      url: `${SITE_URL}/posts/${id}`,
       lastModified: new Date(),
     }))
   );

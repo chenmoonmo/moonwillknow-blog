@@ -5,23 +5,28 @@ import { v4 as uuidv4 } from "uuid";
 export const useMixpanel = () => {
   const mixpanelRef = useRef<any>(null);
 
-  const visit = useCallback(() => {
+  const getUuid = useCallback(() => {
     let uuid = localStorage.getItem("uuid");
     if (!uuid) {
       uuid = uuidv4();
       localStorage.setItem("uuid", uuid);
     }
-    mixpanelRef.current?.track("visit", { uuid });
+    return uuid;
   }, []);
 
+  const visit = useCallback(() => {
+    const uuid = getUuid();
+    mixpanelRef.current?.track("visit", { uuid });
+  }, [getUuid]);
+
   const read = useCallback((pageId: string, pageTitle: string) => {
-    let uuid = localStorage.getItem("uuid");
+    const uuid = getUuid();
     mixpanelRef.current?.track("read", {
       uuid,
       pageId,
-      pageTitle: document.title,
+      pageTitle,
     });
-  }, []);
+  }, [getUuid]);
 
   useLayoutEffect(() => {
     if (!process.env.MIX_PANEL_TOKEN) return;

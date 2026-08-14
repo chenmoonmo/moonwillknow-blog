@@ -1,4 +1,3 @@
-import { NotionAPI } from "notion-client";
 import { getBlockIcon, getPageProperty } from "notion-utils";
 import sortBy from "lodash/sortBy";
 import filter from "lodash/filter";
@@ -6,6 +5,7 @@ import filter from "lodash/filter";
 import { cache } from "react";
 import { defaultMapImageUrl } from "./";
 import { unwrapBlock } from "./unwrap-block";
+import { notion } from "./notion";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
@@ -25,7 +25,6 @@ export const getAllPages = cache(
     posts: PostInfoType[];
     tags: string[];
   }> => {
-    const notion = new NotionAPI();
     const recordMap = await notion.getPage("7943a9acb48b4fd6ae1784a4d1957e14");
     const { block } = recordMap;
 
@@ -54,16 +53,18 @@ export const getAllPages = cache(
         ? defaultMapImageUrl(pageBlock?.format?.page_cover, pageBlock)
         : null;
 
+      if (status !== "Published") return;
+
       tags?.forEach((tag) => allTags.add(tag));
 
       pages.push({
         id,
         title,
         date,
-        tags,
+        tags: tags ?? [],
         status,
         icon,
-        description,
+        description: description ?? "",
         cover,
       });
     });
@@ -71,7 +72,7 @@ export const getAllPages = cache(
     return {
       tags: sortBy(filter(Array.from(allTags), (item) => !!item)) ?? [],
       posts: sortBy(
-        filter(Object.values(pages), (page) => page.status === "Published"),
+        pages,
         (page) => -page.date
       ),
     };

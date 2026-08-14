@@ -1,6 +1,7 @@
 import { Detail } from "./detail";
 import { getPage } from "@/utils/get-page";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type PageProps = {
   params: {
@@ -66,7 +67,7 @@ export default async function PostDeatil({ params: { id } }: PageProps) {
   const safeTitle = title ?? "Untitled";
 
   if (status !== "Published") {
-    throw new Error("404");
+    notFound();
   }
 
   return <Detail id={id} title={safeTitle} cover={cover} recordMap={recordMap} />;

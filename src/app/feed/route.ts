@@ -1,21 +1,21 @@
-import { NotionAPI } from "notion-client";
 import { getPageProperty } from "notion-utils";
 import { defaultMapImageUrl } from "@/utils/map-image-url";
+import { notion } from "@/utils/notion";
 import { unwrapBlock } from "@/utils/unwrap-block";
+import { SITE_URL } from "@/utils/site";
 import RSS from "rss";
 
 type StatusType = "Published" | "Draft" | "Revise" | "Idea" | null;
 
 export async function GET(res: Request) {
-  const notion = new NotionAPI();
   const recordMap = await notion.getPage("7943a9acb48b4fd6ae1784a4d1957e14");
 
   const { block } = recordMap;
 
   const feed = new RSS({
     title: "Moon will know",
-    site_url: "moonwillknow.dev",
-    feed_url: "moonwillknow.dev/feed",
+    site_url: SITE_URL,
+    feed_url: `${SITE_URL}/feed`,
     language: "zh-cn",
     ttl: 60,
   });
@@ -38,7 +38,7 @@ export async function GET(res: Request) {
     if (status === "Published") {
       feed.item({
         title,
-        url: `https://moonwillknow.dev/posts/${id}`,
+        url: `${SITE_URL}/posts/${id}`,
         date: new Date(date).toUTCString(),
         description,
         enclosure: cover

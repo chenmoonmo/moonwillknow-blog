@@ -1,11 +1,12 @@
 "use client";
 import { IconButton, useToast } from "@chakra-ui/react";
 import Image from "next/image";
+import { SITE_URL } from "@/utils/site";
 
 export const Feed = () => {
   const toast = useToast();
   const copyFeed = () => {
-    navigator.clipboard.writeText("https://moonwillknow.dev/feed");
+    navigator.clipboard.writeText(`${SITE_URL}/feed`);
     toast({
       title: "Copied to clipboard",
       position: "bottom-right",

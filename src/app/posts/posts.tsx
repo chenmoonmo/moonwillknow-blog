@@ -14,13 +14,18 @@ export const MainPosts: React.FC<PostsProps> = ({ posts, tags }) => {
   const [currentTags, setCurrentTags] = useState<string[]>(tags);
 
   const filterPosts = useMemo(() => {
-    if (currentTags) {
-      return filter(posts, (item) => {
-        return currentTags.some((tag) => item.tags.includes(tag));
-      });
+    if (currentTags.length === tags.length) {
+      return posts;
     }
-    return posts;
-  }, [currentTags, posts]);
+
+    if (currentTags.length === 0) {
+      return [];
+    }
+
+    return filter(posts, (item) => {
+      return currentTags.some((tag) => item.tags.includes(tag));
+    });
+  }, [currentTags, posts, tags.length]);
 
   return (
     <>

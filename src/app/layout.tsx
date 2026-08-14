@@ -13,10 +13,12 @@ import { Providers } from "./providers";
 import { Header, ThemeColor } from "./header";
 import { Footer } from "@/components/footer";
 import { Feed } from "@/components/feed";
+import { SITE_URL } from "@/utils/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Moon Will Know",
   description: "Moon will know",
   applicationName: "MoonWillKnow",
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Moon Will Know",
     description: "Moon will know",
-    url: "https://moonwillknow.com",
+    url: SITE_URL,
     type: "website",
     images: "/cat.JPG",
   },
