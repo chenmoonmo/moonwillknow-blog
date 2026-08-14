@@ -1,3 +1,5 @@
 allowBuilds:
   canvas: false
   unrs-resolver: false
+packages:
+  - "."
